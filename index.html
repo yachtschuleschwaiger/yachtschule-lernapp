@@ -18,6 +18,22 @@
 function decode64(s){const bin=atob(s);const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder('utf-8').decode(bytes)}
 function showHome(){document.getElementById('home').style.display='block';document.getElementById('motorboot').style.display='none';window.scrollTo(0,0)}
 function showMotorboot(){document.getElementById('home').style.display='none';document.getElementById('motorboot').style.display='block';window.scrollTo(0,0)}
-function openModule(k){document.getElementById('modtitle').textContent=names[k];document.getElementById('viewer').style.display='block';document.getElementById('frame').srcdoc=decode64(modules[k]);window.scrollTo(0,0)}
-function closeModule(){document.getElementById('frame').srcdoc='';document.getElementById('viewer').style.display='none';showMotorboot()}
+let currentModuleUrl=null;
+function openModule(k){
+  document.getElementById('modtitle').textContent=names[k];
+  document.getElementById('viewer').style.display='block';
+  const frame=document.getElementById('frame');
+  if(currentModuleUrl) URL.revokeObjectURL(currentModuleUrl);
+  const html=decode64(modules[k]);
+  currentModuleUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  frame.src=currentModuleUrl;
+  window.scrollTo(0,0);
+}
+function closeModule(){
+  const frame=document.getElementById('frame');
+  frame.removeAttribute('src');
+  if(currentModuleUrl){URL.revokeObjectURL(currentModuleUrl);currentModuleUrl=null;}
+  document.getElementById('viewer').style.display='none';
+  showMotorboot();
+}
 </script></body></html>
