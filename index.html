@@ -23,10 +23,14 @@ function openModule(k){
   document.getElementById('modtitle').textContent=names[k];
   document.getElementById('viewer').style.display='block';
   const frame=document.getElementById('frame');
-  if(currentModuleUrl) URL.revokeObjectURL(currentModuleUrl);
-  const html=decode64(modules[k]);
-  currentModuleUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
-  frame.src=currentModuleUrl;
+  if(currentModuleUrl) { URL.revokeObjectURL(currentModuleUrl); currentModuleUrl=null; }
+  if(k==='bootsabmessungen'){
+    frame.src='boots.html';
+  } else {
+    const html=decode64(modules[k]);
+    currentModuleUrl=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+    frame.src=currentModuleUrl;
+  }
   window.scrollTo(0,0);
 }
 function closeModule(){
