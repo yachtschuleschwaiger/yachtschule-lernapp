@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Yachtschule Schwaiger App – Prüfungstrainer</title>
+<style>
+:root {
+  --bg:#eef4f8; --card:#ffffff; --text:#13212d; --muted:#60717f;
+  --accent:#0b5fa5; --ok:#1f7a45; --bad:#b23a3a; --border:#d8e1e8;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--text)}
+header{background:#0d2f4f;color:white;padding:18px 20px;position:sticky;top:0;z-index:5}
+header .wrap{max-width:900px;margin:auto;display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+h1{font-size:20px;margin:0} .small{font-size:13px;opacity:.9}
+main{max-width:900px;margin:24px auto;padding:0 14px 40px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:0 8px 24px rgba(10,40,70,.08)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+select,button{font:inherit;border-radius:10px;border:1px solid var(--border);padding:10px 12px;background:white}
+button{cursor:pointer} button.primary{background:var(--accent);color:white;border-color:var(--accent)}
+button:disabled{opacity:.55;cursor:not-allowed}
+.progress{height:10px;background:#dfe8ef;border-radius:999px;overflow:hidden;margin:12px 0 20px}
+.progress>div{height:100%;background:var(--accent);width:0}
+.meta{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.question{font-size:24px;line-height:1.3;margin:18px 0}
+.answers{display:grid;gap:10px}
+.answer{text-align:left;padding:14px;border:2px solid var(--border);border-radius:12px;background:white}
+.answer:hover{border-color:#9bbbd5}
+.answer.correct{border-color:var(--ok);background:#edf8f1}
+.answer.wrong{border-color:var(--bad);background:#fff0f0}
+.feedback{margin-top:16px;padding:14px;border-radius:12px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:#edf8f1;color:#155b33}
+.feedback.bad{background:#fff0f0;color:#8d2d2d}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px}
+.scorebox{text-align:center;padding:16px}
+.scorebig{font-size:52px;font-weight:700;color:var(--accent)}
+.badge{display:inline-block;padding:5px 9px;border-radius:999px;background:#e8f1f8;color:#234b6a;font-size:12px}
+.footer-note{margin-top:16px;color:var(--muted);font-size:12px;line-height:1.5}
+.hidden{display:none!important}
+@media(max-width:600px){.question{font-size:20px} .card{padding:16px}}
+</style>
+</head>
+<body><div style="position:sticky;top:0;z-index:9999;background:#063d68;color:white;padding:8px 12px;text-align:left;font-family:Arial,sans-serif"><a href="index.html" style="color:white;text-decoration:none;font-weight:700">← Yachtschule Schwaiger · Kursauswahl</a></div>
+<header>
+<div class="wrap">
+  <div>
+    <h1>Yachtschule Schwaiger App</h1>
+    <div class="small">Prüfungstrainer · Technik</div>
+  </div>
+  <div id="topScore">0 richtig · 0 falsch</div>
+</div>
+</header>
+<main>
+  <div class="toolbar">
+    <select id="category"></select>
+    <button id="shuffleBtn">Neu mischen</button>
+    <button id="resetBtn">Zurücksetzen</button>
+  </div>
+
+  <div class="card" id="quizCard">
+    <div class="meta">
+      <span id="catBadge" class="badge"></span>
+      <span id="counter"></span>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="question" class="question"></div>
+    <div id="answers" class="answers"></div>
+    <div id="feedback" class="feedback"></div>
+    <div class="nav">
+      <button id="prevBtn">← Zurück</button>
+      <button id="nextBtn" class="primary">Weiter →</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="resultCard">
+    <div class="scorebox">
+      <div class="badge">Ergebnis</div>
+      <div id="scoreBig" class="scorebig"></div>
+      <div id="scoreText"></div>
+      <div style="margin-top:16px"><button class="primary" id="againBtn">Noch einmal</button></div>
+    </div>
+  </div>
+
+  <div class="footer-note">
+    Hinweis: Die richtigen Antworten wurden aus dem Fragenkatalog „Fragen Technik 2025“ übernommen.
+    Die falschen Antwortmöglichkeiten wurden bewusst ähnlich und prüfungsnah formuliert, damit die richtige Lösung nicht sofort erkennbar ist.
+  </div>
+</main>
+
+<script>
+const ALL = [{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist vor dem Starten des Motors unter anderem zu prüfen?","options":["Motorölstand, Kühlmittelstand, Treibstofffüllstand und Bilge","Nur Kühlmittelstand, Batteriespannung und Positionslichter","Motorölstand, Anker, Fender und Festmacher","Nur Treibstofffüllstand und Bilgepumpe"],"answer":0,"explain":"Vor dem Start nennt der Fragenkatalog u. a. Motorölstand, Kühlmittelstand, Treibstofffüllstand und Bilge."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was überprüfen Sie unmittelbar nach dem Starten des Motors?","options":["Armaturen, Kühlung und Motorgeräusch","Ölstand, Ankerkette und Festmacher","Nur Drehzahlmesser und Tankanzeige","Kühlung erst nach einigen Minuten Fahrt"],"answer":0,"explain":"Unmittelbar nach dem Start sind Armaturen, Kühlung und Motorgeräusch zu kontrollieren."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist bei einem Brand im Motorraum richtig?","options":["Motorraumdeckel nicht öffnen und Treibstoffzufuhr unterbrechen","Motorraumdeckel vorsichtig öffnen und Löschmittel direkt einsprühen","Motor abstellen, aber Treibstoffzufuhr geöffnet lassen","Motorraum belüften und anschließend mit Wasser löschen"],"answer":0,"explain":"Der Motorraumdeckel soll nicht geöffnet werden; die Treibstoffzufuhr ist zu unterbrechen."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist bei einem nicht löschbaren Brand an Bord zu tun?","options":["Falls nötig gegen Wind bzw. gegen die Strömung von Bord gehen und Notruf absetzen","Mit Wind bzw. Strömung vom Boot wegschwimmen und danach Notruf absetzen","Nur dann von Bord gehen, wenn bereits andere Fahrzeuge vor Ort sind","Zuerst ankern und erst danach das Boot verlassen"],"answer":0,"explain":"Im Fragenkatalog: bei Bedarf gegen Wind bzw. Strömung von Bord gehen, Notruf und Schifffahrtsaufsicht verständigen."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Welche Maßnahme hilft gegen Kabelbrand?","options":["Stromversorgung unterbrechen","Batteriehauptschalter eingeschaltet lassen, damit die Bilgepumpe weiterläuft","Betroffenen Stromkreis stärker absichern","Kabel mit möglichst viel Wasser kühlen"],"answer":0,"explain":"Bei Kabelbrand ist die Stromversorgung zu unterbrechen."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was gehört zum vorbeugenden Brandschutz an Bord?","options":["Bilge sauber halten und Feuerlöscher regelmäßig überprüfen","Treibstoffvorräte im Motorraum lagern und regelmäßig kontrollieren","Feuerlöscher nur nach Gebrauch überprüfen","Elektrische Sicherungen möglichst groß dimensionieren"],"answer":0,"explain":"Der Katalog nennt u. a. saubere Bilge, geeignete Löschgeräte und regelmäßige Überprüfung."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist bei einem Leck sinnvoll?","options":["Leck stopfen, Bilgepumpe einschalten und Wasser ausschöpfen","Leck nur von außen suchen und Motor weiterlaufen lassen","Bilgepumpe ausschalten, damit sie nicht trockenläuft","Zuerst alle Seeventile öffnen, um den Druck auszugleichen"],"answer":0,"explain":"Leck abdichten, Wasser entfernen und Bilgepumpe einschalten sind zentrale Maßnahmen."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist bei Motorausfall in einem Fließgewässer besonders wichtig?","options":["Schnellstmöglich die Fahrrinne verlassen","In der Fahrrinne ankern, damit das Boot nicht abtreibt","Quer zur Fahrrinne treiben lassen und Hilfe abwarten","Fahrzeug möglichst in Fahrwassermitte halten"],"answer":0,"explain":"Auf Fließgewässern soll die Fahrrinne schnellstmöglich verlassen werden."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Welche Ausrüstung gehört zu einer sicheren Fahrt?","options":["Rettungswesten, Feuerlöscher, Erste-Hilfe-Kasten und Anker","Rettungswesten, Fernglas, Werkzeug und Fender","Feuerlöscher, Kompass, Radio und Bootshaken","Erste-Hilfe-Kasten, Positionslichter, Fender und Paddel"],"answer":0,"explain":"Der Fragenkatalog nennt u. a. Rettungswesten, Feuerlöscher, Erste-Hilfe-Kasten und Anker."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Wie viel Mindestauftrieb nennt der Fragenkatalog für Rettungswesten bei Erwachsenen zumindest?","options":["100 N","50 N","150 N","275 N"],"answer":0,"explain":"Zumindest 100 N gemäß Schiffstechnikverordnung."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Wodurch unterscheidet sich eine Rettungsweste von einer Schwimmweste?","options":["Rettungswesten sind ohnmachtssicher und haben mindestens etwa 100 N Auftrieb","Schwimmwesten sind ohnmachtssicher, Rettungswesten dagegen nur Auftriebshilfen","Rettungswesten unterscheiden sich nur durch die Signalfarbe","Schwimmwesten haben grundsätzlich mindestens 150 N Auftrieb"],"answer":0,"explain":"Der Katalog nennt Ohnmachtssicherheit, Signalfarbe und mindestens etwa 100 N Auftrieb."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was tun Sie, wenn der Motor während der Fahrt überhitzt?","options":["Motor stoppen, Kühlung kontrollieren und erst nach Behebung weiterfahren","Drehzahl reduzieren und bis zum nächsten Hafen weiterfahren","Motor im Leerlauf weiterlaufen lassen, bis die Temperatur sinkt","Kühlwasserventil schließen und mit niedriger Drehzahl weiterfahren"],"answer":0,"explain":"Motor stoppen, Ursache prüfen und nur nach Behebung weiterfahren."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was ist bei aufleuchtender Öldruckkontrollleuchte zu tun?","options":["Motor stoppen und Ursache beheben lassen","Drehzahl reduzieren und Öldruck weiter beobachten","Motor im Leerlauf laufen lassen und Öl nachfüllen","Bis zum nächsten Liegeplatz langsam weiterfahren"],"answer":0,"explain":"Der Motor ist zu stoppen; weiterfahren erst nach Behebung der Ursache."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Woran erkennen Sie Taucher im Wasser?","options":["An der Flagge ALFA am Begleitboot oder an einer Boje","An einer roten Flagge mit weißem Kreuz","An einer gelben Flagge am Heck des Begleitbootes","An zwei übereinander gesetzten schwarzen Bällen"],"answer":0,"explain":"Taucher werden durch die Flagge ALFA am Begleitboot oder an einer Boje gekennzeichnet."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Welche Notrufnummer nennt der Fragenkatalog für medizinische Hilfe?","options":["144","112","122","133"],"answer":0,"explain":"Für Rettung/medizinische Hilfe wird 144 genannt."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Was tun Sie bei einer bewusstlosen Person ohne Atmung?","options":["Mit der Wiederbelebung beginnen","Person in stabile Seitenlage bringen und Atmung weiter beobachten","Zuerst Flüssigkeit geben und danach den Notruf absetzen","Person aufsetzen und für Frischluft sorgen"],"answer":0,"explain":"Bei Bewusstlosigkeit ohne Atmung ist mit der Wiederbelebung zu beginnen."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Wofür steht Brandklasse B?","options":["Brände von Flüssigkeiten oder flüssig werdenden Stoffen","Brände fester, glutbildender Stoffe","Brände von Gasen","Brände von Speiseölen und Speisefetten"],"answer":0,"explain":"Brandklasse B betrifft Flüssigkeiten bzw. flüssig werdende Stoffe."},{"cat":"1. Sicherheit & Erste Hilfe","q":"Wie oft ist ein Feuerlöscher laut Fragenkatalog zu überprüfen?","options":["Alle 2 Jahre","Jährlich","Alle 3 Jahre","Alle 5 Jahre"],"answer":0,"explain":"Alle 2 Jahre laut Plakette."},{"cat":"2. Navigation & Manöver","q":"Welche Hilfsmittel nennt der Katalog zur Orientierung auf einem großen See?","options":["Karte, Winkelmesser/Lineal und Schiffskompass","Karte, Echolot und Drehzahlmesser","GPS, Fernglas und Ankerpeilung","Kompass, Log und Bilgepumpe"],"answer":0,"explain":"Genannt werden Land-/Seekarte, Winkelmesser und Lineal sowie Schiffskompass."},{"cat":"2. Navigation & Manöver","q":"Was ist beim Tanken an einer Motorboottankstelle richtig?","options":["Luken schließen, Rauchen einstellen und kein offenes Feuer","Luken öffnen, damit sich keine Dämpfe sammeln können","Motor im Leerlauf laufen lassen, damit die Batterie geladen bleibt","Nur elektrische Geräte ausschalten; Rauchen an Deck ist erlaubt"],"answer":0,"explain":"Vor dem Tanken: Luken schließen, Rauchen einstellen, kein offenes Feuer, Feuerlöscher vorbereiten."},{"cat":"2. Navigation & Manöver","q":"Wo müssen Fahrzeuge unter 20 m bei einer Bergschleusung grundsätzlich festmachen?","options":["In den stromaufwärtigen 2/3 der Schleusenkammer","Im stromabwärtigen Drittel der Schleusenkammer","Möglichst mittig in der Schleusenkammer","Unmittelbar vor dem stromaufwärtigen Schleusentor"],"answer":0,"explain":"Grundsätzlich in den stromaufwärtigen 2/3 der Schleusenkammer; Ausnahmen sind im Katalog genannt."},{"cat":"2. Navigation & Manöver","q":"Wie wird ein Ankermanöver am See begonnen?","options":["Boot gegen den Wind drehen","Boot quer zum Wind legen","Boot mit dem Wind ausrichten","Anker bei langsamer Vorausfahrt über das Heck ausbringen"],"answer":0,"explain":"Am See wird das Boot gegen den Wind gedreht."},{"cat":"2. Navigation & Manöver","q":"Wie lang soll eine reine Ankerkette mindestens gesteckt werden?","options":["Etwa 3-fache Wassertiefe","Etwa 2-fache Wassertiefe","Etwa 4-fache Wassertiefe","Etwa 5-fache Wassertiefe"],"answer":0,"explain":"Nur Ankerkette: 3-fache Wassertiefe."},{"cat":"2. Navigation & Manöver","q":"Wie lang soll eine Ankerleine mit Kettenvorlauf gesteckt werden?","options":["Etwa 5-fache Wassertiefe","Etwa 3-fache Wassertiefe","Etwa 4-fache Wassertiefe","Etwa 7-fache Wassertiefe"],"answer":0,"explain":"Ankerleine mit Kettenvorlauf: 5-fache Wassertiefe."},{"cat":"2. Navigation & Manöver","q":"Welche Funktion hat der Kettenvorlauf bei Verwendung einer Ankerleine?","options":["Er hält den Anker flach am Grund und wirkt federnd","Er verhindert ausschließlich das Verdrehen der Ankerleine","Er hält die Ankerleine senkrecht zum Grund","Er erhöht vor allem die Bruchlast der Ankerleine"],"answer":0,"explain":"Der Kettenvorlauf hält den Anker flach am Grund und hat durch sein Gewicht eine federnde Wirkung."},{"cat":"3. Gewässerkunde & Wetter","q":"Woran kann man das Aufkommen eines Gewitters erkennen?","options":["Cumuluswolken türmen sich zu einer dunklen Cumulonimbuswolke auf","Hohe Schleierwolken lösen sich auf und der Luftdruck steigt rasch","Der Wind schläft vollständig ein und der Himmel wird klarer","Gleichmäßige Schichtbewölkung ohne stärkere Vertikalentwicklung"],"answer":0,"explain":"Der Katalog beschreibt aufgetürmte Cumulus-/Cumulonimbuswolken, dunklere Wolken und später kräftigen Wind."},{"cat":"3. Gewässerkunde & Wetter","q":"Wie kann die Entfernung eines Gewitters grob abgeschätzt werden?","options":["Sekunden zwischen Blitz und Donner zählen; etwa 3 Sekunden entsprechen 1 km","Sekunden zwischen Blitz und Donner zählen; etwa 1 Sekunde entspricht 1 km","Sekunden zwischen Blitz und Donner zählen; etwa 5 Sekunden entsprechen 1 km","Nur anhand der Helligkeit des Blitzes"],"answer":0,"explain":"Etwa 3 Sekunden Zeitdifferenz entsprechen ungefähr 1 Kilometer Entfernung."},{"cat":"3. Gewässerkunde & Wetter","q":"Was misst ein Wasserstandspegel?","options":["Den Wasserstand gegenüber einem absoluten oder relativen Pegelnullpunkt","Die Wassertiefe direkt unter dem Schiff","Die Fließgeschwindigkeit eines Gewässers","Den Luftdruck über der Wasseroberfläche"],"answer":0,"explain":"Ein Pegel misst den Wasserstand relativ zu einem festgelegten Nullpunkt."},{"cat":"4. Schiffsbau","q":"Was ist die Bilge?","options":["Der tiefste Bereich im Schiff","Der Bereich zwischen Wasserlinie und Deck","Der Raum unmittelbar über dem Motor","Der vorderste Innenraum im Bug"],"answer":0,"explain":"Die Bilge ist der tiefste Bereich im Schiff, in dem sich häufig Wasser sammelt."},{"cat":"4. Schiffsbau","q":"Wozu dienen Opferanoden?","options":["Zum Schutz von Metallteilen vor Korrosion","Zum Schutz des Rumpfes vor Bewuchs","Zum elektrischen Potentialausgleich der Batterie","Zur Verringerung von Kavitation am Propeller"],"answer":0,"explain":"Opferanoden bestehen aus unedlerem Metall und schützen Metallteile vor Korrosion."},{"cat":"4. Schiffsbau","q":"Welches Opferanodenmaterial nennt der Katalog für Süßwasser?","options":["Magnesium","Zink","Aluminium","Kupfer"],"answer":0,"explain":"Magnesium für Süßwasser, Zink für Salzwasser."},{"cat":"4. Schiffsbau","q":"Wie erfolgt die Steuerung bei Innenbordmotor mit starrer Welle?","options":["Über ein Ruderblatt hinter der Schiffsschraube","Durch Schwenken der Propellerwelle","Durch Schwenken des kompletten Motors","Über eine schwenkbare Düse hinter dem Propeller"],"answer":0,"explain":"Bei starrer Welle erfolgt die Steuerung über ein Ruderblatt hinter der Schraube."},{"cat":"4. Schiffsbau","q":"Wie erfolgt die Steuerung bei einem Z-Antrieb?","options":["Durch Schwenken des Antriebes","Über ein festes Ruderblatt hinter dem Propeller","Durch Schwenken nur der Propellerwelle im Rumpf","Ausschließlich durch unterschiedliche Propellerdrehzahl"],"answer":0,"explain":"Beim Z-Antrieb wird der gesamte Antrieb geschwenkt."},{"cat":"4. Schiffsbau","q":"Wie erfolgt die Steuerung bei einem Außenbordmotor?","options":["Durch Schwenken des kompletten Außenborders","Über ein Ruderblatt hinter dem Außenborder","Durch Verdrehen der Propellerblätter","Nur durch Trimmen des Motors"],"answer":0,"explain":"Der Außenborder selbst wird mittels Steuerrad oder Pinne geschwenkt."},{"cat":"4. Schiffsbau","q":"Wie funktioniert ein Jetantrieb?","options":["Antrieb durch einen Wasserstrahl aus einer Motor-Pumpenkombination","Antrieb durch einen im Rumpf gekapselten Propeller mit Ruderblatt","Antrieb durch zwei gegenläufige Propeller ohne Ruder","Antrieb durch eine starre Schraubenwelle mit Kortdüse"],"answer":0,"explain":"Der Jetantrieb erzeugt einen Wasserstrahl; gesteuert wird über eine schwenkbare Düse."},{"cat":"4. Schiffsbau","q":"Womit kann die Geschwindigkeit eines Bootes festgestellt werden?","options":["Log, Tacho oder GPS","Kompass, Echolot oder GPS","Drehzahlmesser, Kompass oder Log","Tacho, Echolot oder Voltmeter"],"answer":0,"explain":"Genannt werden Log, Geschwindigkeitsmesser und GPS."},{"cat":"4. Schiffsbau","q":"Womit kann die Wassertiefe festgestellt werden?","options":["Echolot, Seil mit Gewicht oder Stange","Log, Kompass oder Lotleine","Echolot, GPS oder Drehzahlmesser","Tacho, Peilkompass oder Stange"],"answer":0,"explain":"Der Katalog nennt Echolot, Seil mit Gewicht und Stange."},{"cat":"4. Schiffsbau","q":"Wozu dient ein Kompass?","options":["Zur Orientierung und Kursbestimmung","Zur Bestimmung der Geschwindigkeit über Grund","Zur Messung der Entfernung zum Ufer","Zur Bestimmung der Wassertiefe"],"answer":0,"explain":"Der Kompass dient der Orientierung und Kursbestimmung."},{"cat":"4. Schiffsbau","q":"Welche Aussage trifft auf einen Verdränger zu?","options":["Die Rumpfgeschwindigkeit kann nicht überschritten werden","Er geht bei genügend Leistung vollständig in Gleitfahrt über","Seine Höchstgeschwindigkeit hängt nur von der Motorleistung ab","Er hebt sich bei zunehmender Fahrt vollständig aus dem Wasser"],"answer":0,"explain":"Beim Verdränger ist die Rumpfgeschwindigkeit die charakteristische Grenze."},{"cat":"4. Schiffsbau","q":"Welche Kennzahl eines Propellers beeinflusst besonders Schubkraft und Leistungsbedarf?","options":["Durchmesser","Steigung","Blattzahl","Nabenlänge"],"answer":0,"explain":"Je größer der Durchmesser, desto mehr Schubkraft, aber auch mehr Leistungsbedarf."},{"cat":"4. Schiffsbau","q":"Wie sieht ein typischer Kavitationsschaden am Propeller aus?","options":["Als wären kleine Stücke herausgenagt","Als gleichmäßige Riefen entlang der Blattkante","Als glatte, großflächige Verfärbung ohne Materialverlust","Als ausschließlich verbogene Blattspitzen"],"answer":0,"explain":"Kavitation schlägt kleine Materialteile heraus; die Schraube wirkt 'angenagt'."},{"cat":"4. Schiffsbau","q":"Was bedeutet Freibord?","options":["Abstand von der Wasserlinie bis Bordwandoberkante/Deck","Abstand vom tiefsten Kielpunkt bis zur Wasserlinie","Horizontaler Abstand zwischen Bug und Heck","Abstand zwischen Wasserlinie und Propellerwelle"],"answer":0,"explain":"Freibord ist der vertikale Abstand von der Wasserlinie zur Bordwandoberkante bzw. zum Deck."},{"cat":"4. Schiffsbau","q":"Was ist der Radeffekt?","options":["Seitliches Versetzen des Hecks durch die Drehung der Schiffsschraube","Seitliches Versetzen des Bugs durch den Propellerstrahl","Drehung des Bootes allein durch das Ruder bei Vorausfahrt","Seitliches Abdriften des gesamten Bootes durch Wind"],"answer":0,"explain":"Der Radeffekt bezeichnet das seitliche Versetzen des Hecks durch die Schraubendrehung."},{"cat":"4. Schiffsbau","q":"Wann wirkt ein Bugstrahlruder laut Katalog sinnvoll?","options":["Bei langsamer Fahrt bzw. stehendem Schiff","Bei mittlerer Marschfahrt","Vor allem bei Gleitfahrt","Bei jeder Geschwindigkeit gleich wirksam"],"answer":0,"explain":"Ein Bugstrahlruder wirkt bei langsamer Fahrt bzw. stehendem Schiff."},{"cat":"5. Motorkunde","q":"Was ist die Hauptaufgabe der Einkreiskühlung?","options":["Abfuhr der bei der Verbrennung entstehenden Wärme","Kühlung ausschließlich des Auspuffsystems","Schmierung von Zylinder und Kolben","Regelung des Kraftstoff-Luft-Gemisches"],"answer":0,"explain":"Die Kühlung führt die im Motor entstehende Wärme ab."},{"cat":"5. Motorkunde","q":"Was unterscheidet die Zweikreiskühlung wesentlich von der Einkreiskühlung?","options":["Sie besitzt einen äußeren und einen geschlossenen inneren Kühlkreislauf","Sie besitzt zwei voneinander unabhängige Seewasserkreisläufe","Sie kühlt Motor und Auspuff ausschließlich mit Luft","Sie besitzt nur einen geschlossenen Kreislauf ohne Wärmetauscher"],"answer":0,"explain":"Die Zweikreiskühlung besteht aus zwei getrennten Kreisläufen mit Wärmetauscher."},{"cat":"5. Motorkunde","q":"Welche Aufgabe hat der Batteriehauptschalter?","options":["Trennung des Stromkreises von der Batterie","Trennung des Anlassers vom Motor","Umschaltung zwischen Lichtmaschine und Landstrom","Regelung der Ladespannung der Batterie"],"answer":0,"explain":"Der Batteriehauptschalter trennt den Stromkreis von der Batterie bzw. kann Kreise umschalten."},{"cat":"5. Motorkunde","q":"Wie kann man den Zustand einer Batterie prüfen?","options":["Startversuch, Spannungsmessung und optische Kontrolle","Nur Ruhespannung messen; weitere Prüfungen sind nicht nötig","Säuredichte messen, auch bei wartungsfreien Batterien zwingend","Nur Ladestrom der Lichtmaschine kontrollieren"],"answer":0,"explain":"Der Katalog nennt Startversuch, Voltmeter und optische Kontrolle."},{"cat":"5. Motorkunde","q":"Was bedeutet blauer Auspuffrauch bei einem 4-Takt-Benzinmotor typischerweise?","options":["Öl wird mitverbrannt","Das Kraftstoffgemisch ist zu fett","Wasser gelangt in den Brennraum","Der Motor erhält zu wenig Kraftstoff"],"answer":0,"explain":"Blauer Rauch bedeutet, dass Öl mitverbrannt wird."},{"cat":"5. Motorkunde","q":"Wie werden größere Außenbordmotoren laut Katalog typischerweise montiert?","options":["Mit Durchsteckbolzen durch den Spiegel","Mit Klemmschrauben am Spiegel wie kleine Außenborder","Mit einer innenliegenden Motorhalterung ohne Spiegelverschraubung","Nur mit einer Sicherungskette und zwei Klemmbügeln"],"answer":0,"explain":"Größere Außenborder werden durch den Spiegel hindurch verschraubt."},{"cat":"5. Motorkunde","q":"Was ist ein nasser Auspuff?","options":["Ein System, bei dem Wasser in das Auspuffsystem eingespritzt wird","Ein Auspuffsystem, das vollständig unter der Wasserlinie endet","Ein Auspuff mit wassergekühltem Schalldämpfer, aber ohne Wassereinspritzung","Ein Auspuffsystem, das Abgase zuerst durch die Bilge leitet"],"answer":0,"explain":"Beim nassen Auspuff wird Wasser unmittelbar beim Auspuffkrümmer eingespritzt."},{"cat":"6. Fahrgäste","q":"Was hat bei einem Brand an Bord mit Fahrgästen höchste Priorität?","options":["Sicherung des Lebens von Fahrgästen und Besatzung","Schnellstmögliche Brandbekämpfung durch alle Personen an Bord","Erhaltung der Manövrierfähigkeit des Schiffes","Sicherung von Schiffspapieren und persönlicher Ausrüstung"],"answer":0,"explain":"Der Schutz von Fahrgästen und Besatzung steht an erster Stelle."},{"cat":"6. Fahrgäste","q":"Wer verlässt bei einer Evakuierung das Schiff zuletzt?","options":["Der Schiffsführer","Ein Besatzungsmitglied mit Rettungsausbildung","Der älteste Fahrgast","Der Maschinenverantwortliche"],"answer":0,"explain":"Der Schiffsführer geht als Letzter von Bord."},{"cat":"7. Knoten","q":"Wozu dient der Palstek?","options":["Zum Festmachen an Pollern, Klampen usw.","Zum Verbinden zweier gleich starker Leinen","Zum Sichern eines bereits gelegten Knotens","Als Stopperknoten am Leinenende"],"answer":0,"explain":"Der Palstek dient laut Katalog zum Festmachen an Pollern, Klampen usw."},{"cat":"7. Knoten","q":"Wozu dient der halbe Schlag?","options":["Zum Sichern anderer Knoten","Zum Verbinden zweier gleich starker Leinen","Als feste Schlaufe zum Festmachen","Als Stopperknoten am Leinenende"],"answer":0,"explain":"Der halbe Schlag dient zum Sichern anderer Knoten."},{"cat":"7. Knoten","q":"Wozu dient der Kreuzknoten?","options":["Zum Verbinden zweier gleich starker Leinen","Zum Verbinden unterschiedlich starker Leinen","Zum Herstellen einer festen Schlaufe","Zum Festmachen auf einer Klampe"],"answer":0,"explain":"Der Kreuzknoten verbindet zwei gleich starke Leinen."},{"cat":"7. Knoten","q":"Wozu dient der Achterknoten?","options":["Damit ein Seilende nicht durchrutschen kann","Zum Verbinden zweier gleich starker Leinen","Zum Festmachen an einem Poller","Zum Verkürzen einer Leine unter Zug"],"answer":0,"explain":"Der Achterknoten wird am Seilende eingesetzt, damit nichts durchrutschen kann."},{"cat":"7. Knoten","q":"Wozu dient der Klampenschlag?","options":["Zum Festmachen auf einer Klampe","Zum Verbinden zweier Leinen miteinander","Zum Herstellen einer festen Schlaufe","Zum Sichern eines Leinenendes gegen Durchrutschen"],"answer":0,"explain":"Der Klampenschlag dient zum Festmachen auf einer Klampe."},{"cat":"8. Entscheidungsfragen","q":"In welche Richtung muss der Bug beim Anlegen in einer Strömung zeigen?","options":["Gegen die Strömung","Mit der Strömung","Quer zur Strömung mit Bug zum Ufer","Schräg stromabwärts"],"answer":0,"explain":"Der Bug soll gegen die Strömung zeigen."},{"cat":"8. Entscheidungsfragen","q":"Wenn ein Brand an Bord nicht löschbar ist: In welche Richtung verlassen Sie das treibende Boot bezüglich der Strömung?","options":["Gegen die Strömung","Mit der Strömung","Quer zur Strömung","Zur näheren Uferseite unabhängig von der Strömung"],"answer":0,"explain":"Der Katalog nennt: gegen die Strömung."},{"cat":"8. Entscheidungsfragen","q":"Wenn ein Brand an Bord nicht löschbar ist: In welche Richtung verlassen Sie das Boot bezüglich des Windes?","options":["Gegen den Wind","Mit dem Wind","Quer zum Wind","Zur Leeseite des Bootes"],"answer":0,"explain":"Der Katalog nennt: gegen den Wind."},{"cat":"8. Entscheidungsfragen","q":"In der Schleuse bleiben neben der Großschifffahrt nur 5 m frei. Dürfen Sie daneben festmachen?","options":["Nein","Ja, wenn das eigene Fahrzeug unter 10 m lang ist","Ja, wenn kein Gegenverkehr zu erwarten ist","Ja, sofern mindestens 5 m Abstand zur Großschifffahrt bleiben"],"answer":0,"explain":"Nein. Laut Fragenkatalog müssen 1/3 der Schleusenbreite, also 8 m, frei bleiben."},{"cat":"8. Entscheidungsfragen","q":"Bei 5 m Wassertiefe: Wie lang muss die Ankerkette mindestens gesteckt werden?","options":["15 m","10 m","20 m","25 m"],"answer":0,"explain":"Mindestens 3-fache Wassertiefe = 15 m."}];
+let pool = [];
+let idx = 0;
+let right = 0, wrong = 0;
+let answered = new Map();
+
+const $ = id => document.getElementById(id);
+const catSel = $("category");
+
+function shuffle(a) {
+  const x = [...a];
+  for (let i=x.length-1;i>0;i--) {
+    const j=Math.floor(Math.random()*(i+1));
+    [x[i],x[j]]=[x[j],x[i]];
+  }
+  return x;
+}
+
+function categories() {
+  const cats = [...new Set(ALL.map(q=>q.cat))];
+  catSel.innerHTML = '<option value="ALL">Alle Themen</option>' + cats.map(c=>`<option value="${c}">${c}</option>`).join('');
+}
+
+function buildPool() {
+  const c = catSel.value || "ALL";
+  pool = shuffle(c==="ALL" ? ALL : ALL.filter(q=>q.cat===c));
+  idx = 0; right = 0; wrong = 0; answered.clear();
+  $("resultCard").classList.add("hidden");
+  $("quizCard").classList.remove("hidden");
+  render();
+}
+
+function render() {
+  if (!pool.length) return;
+  const q = pool[idx];
+  $("catBadge").textContent = q.cat;
+  $("counter").textContent = `Frage ${idx+1} von ${pool.length}`;
+  $("bar").style.width = `${((idx+1)/pool.length)*100}%`;
+  $("question").textContent = q.q;
+  $("feedback").className = "feedback";
+  $("feedback").textContent = "";
+
+  let opts = q.options.map((txt,i)=>({txt, original:i}));
+  // stable randomized option order per question
+  const key = `order-${q.q}`;
+  let stored = sessionStorage.getItem(key);
+  if (stored) {
+    const order = JSON.parse(stored);
+    opts = order.map(i=>opts.find(o=>o.original===i));
+  } else {
+    opts = shuffle(opts);
+    sessionStorage.setItem(key, JSON.stringify(opts.map(o=>o.original)));
+  }
+
+  $("answers").innerHTML = "";
+  opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="answer";
+    b.textContent=o.txt;
+    b.dataset.original=o.original;
+    b.onclick=()=>choose(b, q);
+    $("answers").appendChild(b);
+  });
+
+  const state = answered.get(idx);
+  if (state) {
+    showAnswered(q, state.choice);
+  }
+  $("prevBtn").disabled = idx===0;
+  $("nextBtn").textContent = idx===pool.length-1 ? "Ergebnis" : "Weiter →";
+  updateScore();
+}
+
+function choose(btn,q) {
+  if (answered.has(idx)) return;
+  const choice = Number(btn.dataset.original);
+  answered.set(idx, {choice});
+  if (choice===q.answer) right++; else wrong++;
+  showAnswered(q, choice);
+  updateScore();
+}
+
+function showAnswered(q, choice) {
+  [...document.querySelectorAll(".answer")].forEach(b=>{
+    const oi = Number(b.dataset.original);
+    b.disabled = true;
+    if (oi===q.answer) b.classList.add("correct");
+    if (oi===choice && choice!==q.answer) b.classList.add("wrong");
+  });
+  const ok = choice===q.answer;
+  $("feedback").className = "feedback show " + (ok ? "ok":"bad");
+  $("feedback").innerHTML = `<strong>${ok ? "Richtig!" : "Leider falsch."}</strong><br>${q.explain}`;
+}
+
+function updateScore() {
+  $("topScore").textContent = `${right} richtig · ${wrong} falsch`;
+}
+
+$("nextBtn").onclick=()=>{
+  if (idx<pool.length-1) { idx++; render(); }
+  else {
+    $("quizCard").classList.add("hidden");
+    $("resultCard").classList.remove("hidden");
+    const total = right+wrong;
+    const pct = total ? Math.round(right/total*100) : 0;
+    $("scoreBig").textContent = pct + "%";
+    $("scoreText").textContent = `${right} richtig, ${wrong} falsch, ${pool.length-total} unbeantwortet`;
+  }
+};
+$("prevBtn").onclick=()=>{ if(idx>0){idx--;render();} };
+$("shuffleBtn").onclick=buildPool;
+$("resetBtn").onclick=()=>{sessionStorage.clear();buildPool();};
+$("againBtn").onclick=buildPool;
+catSel.onchange=buildPool;
+
+categories();
+buildPool();
+</script>
+</body>
+</html>
