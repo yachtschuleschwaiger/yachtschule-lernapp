@@ -1,26 +1,229 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Prüfungsfragen G</title><script type="text/javascript" src="/86AAF7CD-A199-463A-BEEF-AEE7400B3F0D/main.js?attr=nWUd2-0MV0AmobKp0v1aGk9mzkqiJJ9USUAl5MM8zjMGGn54SxcvEC6xzZnKW8ETM6gRzrx4Jfif71xUH1xDA7M0WMsCI43_VlZYFQlPwZX765A3brCe2QvKKZADhhO7_ZblDktRNUH34tQxsMQv51opWccvG4M5oHUc5aDr95z0Zv_sQ0-urtObL0a-WaeJWuGvtfOlvmXyeOX4x6LOSHk77c6JYTRINCcxT7fjue7B5FM_8VlAHr8kl8JdcQU7AWJVO_vOqOVHvONCsw6Lcp9Ni7RnsETwb37oZzpTW2_nFLErJ46XS4xuOe7gAvmAtVv5RtSNfFzFYPhcPoM7Rg" charset="UTF-8"></script><script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=F7gGdF0UkxuLmSpZ_1ibb-vm7Ssxz1NbXSceKZ-olB69y0BsQjRAg6K38Y8y65Ugw8INBZA4Bsx0ZBDK6IyPOcc4yMpjnSMCFfWp7jXkrK_pu1HWcYdunhDzBRK79-eC1C8Tf--v_0-jPqkvf1wfSh5VjM-H5g5tP3jJjY9H5k2roRIDY8b3PO_s6WxFLzy12ivjiEFXP-mpfX1aMqX2sIDWv0knnUSCtmk2exTR2bUd0CyQejhialung6KMQBiqLF5ikxqQTUzwML1FB-Frh6yNqPbN8wEnxs0B1bKmlfNsnJvmWSXlUQoEu2CA5ODSM7IKM_e9HYtZPsZIyg0vag" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMDM3YTA4MjEwOTJmZTU0MGRkNTdlMWJhMiZmbj1mYjItcHJ1ZWZ1bmdzZnJhZ2VuLWcuaHRtbCZjZD1hdHRhY2htZW50JnRzPTQ5NzA5NSZwPWZzJmNpZD0xJnNpZz1lOTQ0NGY5MDlkM2U4ZDhiYjQ4ZDE0MTRjNDNlMDcyYjNlOGMxMjUzZjgxN2VkOTI1OGZjN2VmYTgzODU2ZmE3JnY9MA"/><style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6fa;color:#16202b}
-header{background:#07599c;color:white;padding:18px;text-align:center}main{max-width:850px;margin:auto;padding:16px}
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Prüfungsfragen G</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fa;color:#16202b}
+header{background:#07599c;color:white;padding:18px;text-align:center}
+main{max-width:850px;margin:auto;padding:16px}
 .card{background:white;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 2px 10px #0001}
-button,select{font-size:17px}button{border:0;border-radius:10px;padding:13px 16px;cursor:pointer}
-.primary{background:#07599c;color:white}.ans{display:block;width:100%;text-align:left;background:#eef4fa;margin:9px 0}
-.good{background:#d9f5df!important}.bad{background:#ffdede!important}.muted{color:#607080}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-#result{font-size:22px;font-weight:bold}select{padding:10px;border-radius:8px}
-</style></head><body><header><h1>Yachtschule Schwaiger</h1><div>FB2 · Prüfungsfragen G</div></header><main>
-<div id="start" class="card"><h2>Single Choice</h2><p>Wähle einen Bereich oder übe alle Fragen gemischt.</p>
-<div class="row"><select id="area"></select><button class="primary" onclick="start()">Start</button></div></div>
-<div id="quiz" class="card" hidden><div class="row"><b id="count"></b><span id="score" style="margin-left:auto"></span></div><h2 id="question"></h2><div id="answers"></div><button id="next" class="primary" onclick="nextQ()" hidden>Nächste Frage</button></div>
-<div id="done" class="card" hidden><h2>Ergebnis</h2><div id="result"></div><p id="detail"></p><button class="primary" onclick="start()">Noch einmal</button></div>
-</main><script>
-const Q=[{"code": "A1", "q": "Welche Befestigungsart von Leinen ist unter Zug kontrolliert lösbar?", "a": ["Leine auf Zugschäkel", "Klampenschlag", "Roringstek", "Palstek"], "c": 1}, {"code": "A2", "q": "Wie kann Kunstfasertauwerk aufgebaut sein?", "a": ["aus einem Material geschlagen oder mit Mantel und Kern aus zwei verschiedenen Materialien", "aus einem Material gezogen oder mit zwei verschiedenen Materialien verdreht", "aus zwei verschiedenen Materialien geschlagen oder mit Mantel und Kern aus einem Material", "aus zwei verschiedenen Materialien geflochten oder mit Mantel und Kern verschmolzen"], "c": 0}, {"code": "A3", "q": "Wie sollen Leinen und Fender in Gezeitengewässern beim Liegen an fixen Kais angebracht werden?", "a": ["besonders eine Fender, Leinen ganz dicht", "nur wenige Fender, Leinen lang", "mit Fenderbrett, das mit Leinen gesichert wird", "Fender in verschiedenen Höhen, Leinen besonders lang"], "c": 3}, {"code": "A4", "q": "Sie haben eine linksgängige Schraube. Auf welche Seite wird das Heck bei Fahrt Voraus versetzt?", "a": ["nach Steuerbord", "nach Backbord", "es wird nicht das Heck nach Stb versetzt sondern der Bug", "es wird nicht das Heck nach Bb versetzt sondern der Bug"], "c": 0}, {"code": "A5", "q": "Haben Motorboote eine Abdrift?", "a": ["ja, aber wenig wegen des großen Lateralplanes", "nein, Motorboote haben keine Abdrift", "ja, aufgrund des kleinen Lateralplanes", "nur bei höherer Geschwindigkeit"], "c": 2}, {"code": "A6", "q": "Welche Maßnahme verbessert die Haltekraft eines Ankers?", "a": ["mehr Kette oder Trosse stecken", "den Anker der Tragbarkeit", "den Anker auf Slip nehmen", "das Setzen eines schweren Ankerballs"], "c": 0}, {"code": "A7", "q": "Soll die Ankerkette mit dem Schiff mit einem Schäkel fix verbunden sein?", "a": ["ja, die Kette muss angeschweißt sein", "nein, die Kette soll mit einem Bändsel mit dem Kettenkasten verbunden sein", "nein, sie soll überhaup nicht verbunden sein", "ja, weil die Schiffshaftpflicht den durch Verordnung festgelegt hat"], "c": 1}, {"code": "A8", "q": "Was wird üblicherweise bei einer Sicherheitseinweisung erklärt?", "a": ["die Zuständigkeit des Sicherheitsdienstes des Hafens", "die privaten Versicherungen der Crewmitglieder", "die Sicherheit der nautischen Versicherungen", "die sicherheitsrelevanten nautischen Ausrüstung"], "c": 3}, {"code": "A9", "q": "Wann wird die Gastlandflagge genutzt?", "a": ["wenn der Schiffsführer eine andere Nationalität hat als das Boot", "beim Einlaufen in fremde Hoheitsgewässer", "nur auf Charterbooten", "im Gastland mindestens dann, wenn die Nationalität wechselt"], "c": 1}, {"code": "A10", "q": "Welche Geschwindigkeit ist bei Sportbooten schadstoffärmer und dadurch ökonomischer?", "a": ["Geschwindigkeit unter Rumpfgeschwindigkeit", "Geschwindigkeit, welche mit Leerlaufdrehzahl des Motors erreicht wird", "Geschwindigkeit knapp unter Gleiten", "Geschwindigkeit über Rumpfgeschwindigkeit"], "c": 0}, {"code": "B1", "q": "Was sind Spanten?", "a": ["tragende Längsverbände eines Schiffsrumpfes", "nichttragende Längsverbände", "Querverbände eines Schiffsrumpfes", "Quervorrichtungen in der Kielnaht"], "c": 2}, {"code": "B2", "q": "Was zeigt die Stabilitätskurve eines Schiffes?", "a": ["den Verlauf der Kipkraft über dem Krängungswinkel", "die Verlagerung des Gewichtsschwerpunktes über dem Krängungswinkel", "den Verlauf des aufrichtenden Moments über dem Krängungswinkel", "die Verlagerung des Auftriebsschwerpunktes über dem Krängungswinkel"], "c": 2}, {"code": "B3", "q": "Wie wird auf Booten meistens das Süßwasser zu den verschiedenen Süßwasserhähnen verteilt?", "a": ["mit einer Druckwasserpumpe", "mit einer Bilgepumpe", "mit der Kühlwasserpumpe", "mit einer Fußpumpe"], "c": 0}, {"code": "B4", "q": "Wie wird die Kapazität eines Akkumulators angegeben?", "a": ["in Volt (V)", "in Mikrofarad (µF)", "in Amperestunden (Ah)", "in Gramm pro cm³"], "c": 2}, {"code": "C1", "q": "Wie wird ein Punkt auf der Erdoberfläche normalerweise angegeben?", "a": ["nach Datum und Uhrzeit", "nach Abstand von einer Landmarke", "nach Planquadrat-Nummer", "nach Breite und Länge"], "c": 3}, {"code": "C2", "q": "Welche Anforderungen erfüllt eine Mercatorkarte?", "a": ["sie ist flächentreu", "sie ist winkeltreu und längentreu", "sie hat über die ganze Fläche den gleichen Maßstab", "sie ist in gnomonischer Projektion ausgeführt"], "c": 1}, {"code": "C3", "q": "Was ist ein Tidenkalender?", "a": ["Ein Kalender mit oft grafischen Darstellungen des Tidenverlaufes an einem Ort", "Ein Kalender mit allen vorausgebaren Springfluten für einen Ort", "Ein Kalender mit typischen Tidenverläufen für mehrere Jahre", "Ein Kalender mit oft grafischen Darstellungen des Tidenverlaufes in allen Küstenstädten des Mittelmeeres"], "c": 0}, {"code": "C4", "q": "Welche Vorteile hat der konventionelle Magnetkompass?", "a": ["seine Anzeigewerte können auch von anderen Geräten benutzt werden", "er funktioniert auch direkt am magnetischen Nordpol", "er funktioniert auch bei Krängung von mehr als 20°", "er benötigt keine Stromversorgung"], "c": 3}, {"code": "C5", "q": "Müssen Sie das Radargerät zur Kollisionsverhütung verwenden, wenn Sie es an Bord haben?", "a": ["nein, Sportschiffsradargeräte dürfen nicht zur Kollisionsverhütung eingesetzt werden", "nein", "ja, aber nur wenn der Radaroperator einen zweitägigen Radarkurs absolviert hat", "ja"], "c": 3}, {"code": "C6", "q": "Wann fährt eine Hundekurve?", "a": ["wenn der Rudergänger den rechtweisenden Kurs hält, dabei aber seitlich abgetrieben wird", "wenn der Rudergänger optisch auf ein Ziel zufährt, dabei aber seitlich abgetrieben wird", "wenn der Rudergänger missweisend auf ein Ziel zufährt und es dadurch verfehlt", "wenn der Rudergänger auf ein Ziel zufährt und dabei immer den selben Kompasskurs beibehält"], "c": 1}, {"code": "C7", "q": "Wie wählt man Peilobjekte vom Gesichtspunkt der Genauigkeit gesehen?", "a": ["große Objekte sind genauer", "ferne Objekte sind genauer", "spitze Objekte sind genauer", "nahe Objekte sind genauer"], "c": 2}, {"code": "C8", "q": "Sie sehen in der Nacht vor sich ein Leuchtfeuer mit durchgehendem Funkelfeuer. Welches Feuer sehen Sie?", "a": ["Kardinales Zeichen „N“", "Kardinales Zeichen „W“", "Kardinales Zeichen „S“", "Kardinales Zeichen „E“"], "c": 0}, {"code": "D1", "q": "Welche Vorschriften werden in SOLAS definiert?", "a": ["Unterschiede zwischen nationalen und internationalen Vorschriften zur Sicherheit von Personen auf See", "Nationale Vorschriften zur Sicherheit von Ladung und Schiffen", "Internationale Vorschriften zur Sicherheit von Personen auf See", "Nationale Vorschriften zur Sicherheit von Personen auf See"], "c": 2}, {"code": "D2", "q": "Sie sehen ein Fahrzeug mit nur zwei Rundumlichtern, rot übereinander (horizontale Lage), um welches Fahrzeug handelt es sich?", "a": ["manövrierunfähiges Fahrzeug auf Grund ohne Fahrt durchs Wasser", "manövrierunfähiges Fahrzeug in Fahrt mit Fahrt durchs Wasser", "manövrierunfähiges Fahrzeug vor Anker mit Fahrt durchs Wasser", "manövrierunfähiges Fahrzeug in Fahrt ohne Fahrt durchs Wasser"], "c": 3}, {"code": "D3", "q": "Was verstehen Sie unter dem Ausdruck „Fahrzeuge haben einander in Sicht“?", "a": ["wenn jedes Fahrzeug vom anderen optisch wahrgenommen werden kann", "wenn sie einander durch akustische Signale wahrnehmen können", "wenn jedes Fahrzeug vom anderen auf dem Radarschirm ein eindeutiges Echo erzeugt", "wenn jedes Fahrzeug das andere bemerkt hat"], "c": 0}, {"code": "D4", "q": "Welche Behörden müssen beim Einklarieren in Kroatien aufgesucht werden?", "a": ["Meldeamt, Bank, Feuerwehr", "Hydrographisches Institut, Hafenkapitän", "Polizei, Zoll, Hafenamt", "Marinabüro, Polizei"], "c": 2}, {"code": "E1", "q": "Die gebräuchlichste Temperaturskala auf Thermometern im europäischen Raum ist...", "a": ["Grad Celsius", "Grad Kelvin", "Grad Fahrenheit", "Kcal"], "c": 0}, {"code": "E2", "q": "In einer Wetterkarte steht diese graphische Darstellung für...", "a": ["eine Warmfront", "eine Kaltfront", "eine symmetrische Darstellung von Quellwolken", "eine Okklusionsfront"], "c": 0}, {"code": "E3", "q": "Warum ist der Wind am Boden geringer als der Wind in 10 Metern Höhe?", "a": ["wegen der Erwärmung der Luft an der Erdoberfläche", "wegen der rascheren Erdrotation in 10 Metern Höhe", "wegen stärkerer Auswirkungen der Windverwirbelungen", "wegen der Reibung an der Erdoberfläche"], "c": 3}, {"code": "E4", "q": "Wie heißen Wolken, welche als Einzelwolken auftreten?", "a": ["Rundwolken", "Cumulus", "Cirrus", "Einzelgänger"], "c": 1}, {"code": "E5", "q": "Welche Zugrichtung haben Tiefdruckgebiete in Europa meistens?", "a": ["von Süd nach Nord", "von West nach Ost", "von Ost nach West", "von Nord nach Süd"], "c": 1}, {"code": "E6", "q": "Wann spricht man von einer „Okklusionsfront“ in einem Tiefdruckgebiet?", "a": ["wenn die Kaltfront einen Trog bildet", "wenn die Warmfront die Kaltfront eingeholt hat", "wenn das Tiefdruckgebiet ein Hochdruckgebiet aufsaugt", "wenn die Kaltfront die Warmfront eingeholt hat"], "c": 3}, {"code": "E7", "q": "Zur Definition der Richtung von Wind wird üblicherweise welche Richtung verwendet?", "a": ["die Richtung aus der der Wind kommt", "die Richtung der Isobaren plus 15 Grad", "die Richtung wohin der Wind weht", "die Richtung der Windfahne abzüglich der Missweisung"], "c": 0}, {"code": "E8", "q": "Wie kündigt sich sehr Starkwind oft an?", "a": ["schnelles Fallen des Luftdruckes", "schnelles Steigen der Lufttemperatur", "durch entfernte Windgeräusche", "schnelles Fallen der Luftfeuchtigkeit"], "c": 0}, {"code": "E9", "q": "Wofür steht „MSI“?", "a": ["Maritime Sicherheits Institution", "Maritime Search and Rescue Information", "Maritime Safety Information", "Maritime Schiffs Identifikation"], "c": 2}, {"code": "E10", "q": "In welcher Reihenfolge werden Seewetterberichte versendet?", "a": ["Warnungen, Großwetterlage, Vorhersage", "keine einheitliche Reihenfolge, je nach Land verschieden", "erst Synopsis, weitere Reihenfolge nach Dringlichkeit", "eine einheitliche Reihenfolge wird nur von den Mitgliedsländern der UNO garantiert"], "c": 0}, {"code": "E11", "q": "Was versteht man unter „Seegang“?", "a": ["die unregelmäßig Bewegung der See in engen Fahrrinnen", "das Gehen mit bloßen Füßen am Wasser", "die Richtung der durch den Wind strömenden See", "die durch Wind verursachte unregelmäßige Bewegung der See"], "c": 3}, {"code": "E12", "q": "Wie ändern Gezeitenströme ihre Richtung?", "a": ["vor Vollmond andere Richtung als nach Vollmond", "180 Grad bei Vollmond, gar nicht bei Halbmond", "von Hochwasser andere Richtung als nach Hochwasser", "nach jedem zweiten Hochwasser andere Richtung"], "c": 2}, {"code": "F1", "q": "Warum kann man mit einem AIS Empfänger ausrüstungspflichtige Schiffe am Kartenplotter sehen, aber Eisberge nicht?", "a": ["weil ausrüstungspflichtige Schiffe ständig AIS-Signale aussenden, Eisberge nicht", "weil ausrüstungspflichtige Schiffe ständig AIS-Signale aussenden, Eisberge diese aber nicht zurückwerfen", "weil ausrüstungspflichtige Schiffe ständig GPS-Signale aussenden, Eisberge aber nicht reflektieren", "weil ausrüstungspflichtige Schiffe EPIRB an Bord haben, Eisberge nur SART"], "c": 0}, {"code": "F2", "q": "Wann bezeichnet man eine Rettungsweste als ohnmachtsicher?", "a": ["wenn sie zusätzlich eine Trillerpfeife hat", "wenn sie mit einem roten „O“ gekennzeichnet ist", "wenn sie auch unter ungünstigen Bedingungen angelegt werden kann", "wenn sie den Kopf über Wasser hält"], "c": 3}, {"code": "F3", "q": "Auf welchem UKW-Sprechfunk-Kanal sollten Sie einen Notruf durchführen?", "a": ["Kanal 10", "Kanal 16", "Kanal 06", "Kanal 70"], "c": 1}, {"code": "F4", "q": "Was sollte als Schlechtwetter in der Besprechung mit der Crew ausgearbeitet werden?", "a": ["ein Plan zum abwechselnden Tragen der Rettungswesten", "ein Routenplan für die ganze Woche", "eine neuerliche Sicherheitseinweisung", "eine genaue Wacheinteilung"], "c": 3}, {"code": "F5", "q": "Womit sollte aus Sicherheitsgründen jedes Crewmitglied vertraut sein?", "a": ["mit der Bedienung des Wassertanks und der Trinkmischbatter", "mit der Bedienung des Rudergestänges und der Motorabstützung", "mit dem Tausch des Ruderblattes und der Motorabstützung", "mit der Bedienung der Ruderanlage und der Motorsteuerung"], "c": 3}, {"code": "F6", "q": "Welches Manöver empfiehlt sich für die Benutzung der Bergeschlaufe wenn diese über Bord geworfen wurde?", "a": ["kreisförmige Fahrt rund um den Verunglückten", "Würgemanöver rund um einen Kreis", "abstoppen und Leine verlängern bis die Bergeschlaufe zum Verunglückten treibt", "direktes Ansteuern des Verunglückten über Bug"], "c": 0}, {"code": "F7", "q": "Was wird mit dem Begriff „Leegwall“ bezeichnet?", "a": ["ein Schiff ist aufgelaufen und liegt im Luv auf einem Wall", "ein Schiff in Luv einer Küste kann seinen Abstand zur Küste aus eigener Kraft nicht mehr vergrößern", "ein Schiff in Lee einer Küste kann diese aus eigener Kraft nicht mehr erreichen", "ein zweiter, paralleler Wellenbrecher aus großen Steinen und Felsbrocken im Luv des Ersten"], "c": 1}, {"code": "F8", "q": "Sie müssen einen Brand löschen. Wie gehen Sie dabei vor?", "a": ["ich richte den Löschstrahl des Feuerlöschers direkt von oben in die Flammen", "ich richte den Löschstrahl des Feuerlöschers auf die noch nicht brennende Umgebung des Feuers", "um ein Übergreifen der Flammen zu verhindern", "ich richte den Löschstrahl des Feuerlöschers gegen die Windrichtung neben den Brandherd"], "c": 1}, {"code": "F9", "q": "Was ist eine gute Methode um jemanden zu finden der vor kurzer Zeit über Bord gegangen sein muss?", "a": ["im Rotorkreis 2kt zirkulieren", "Kreise mit Durchmesser von einer halben Seemeile zu fahren", "auf der Kiellinie zurückfahren", "200 Meter neben der Kiellinie zurückfahren"], "c": 2}, {"code": "F10", "q": "Warum spielen Kochstelle und Motorraum bei der Brandverhütung eine wichtige Rolle?", "a": ["weil dort oft Brände entstehen", "weil dort kurz gesetzlicher Vorschrift die Feuerlöscher angebracht sind", "weil dort Schutz zu suchen ist im Schiffsraum", "weil die Kochstelle mit dem Kühlwasser des Motors gelöscht wird"], "c": 0}, {"code": "M1", "q": "Wie heißt dieser vom Motor angetriebene Bauteil?", "a": ["Schaltpumpe", "Pumpe für Jettrieb", "Impellerpumpe", "Ölpumpe"], "c": 2}, {"code": "M2", "q": "Warum ist Benzin als Treibstoff gefährlicher als Dieselmotortreibstoff?", "a": ["Benzin ist geruchlos und breitet sich unter Wasser aus", "Benzin kann ein explosionsfähiges Gemisch mit Wasser bilden", "Benzin kann ein explosionsfähiges Gemisch mit Luft bilden", "Benzin entzündet sich schon bei Raumtemperatur"], "c": 2}, {"code": "M3", "q": "Was verdichtet der Turbolader?", "a": ["die Ansaugluft des Motors", "das Kühlwasser des Motors", "den Dieseltreibstoff der in die Zylinder eingespritzt wird", "das Schmieröl der Kolbenringe"], "c": 0}, {"code": "M4", "q": "Warum führt Luft in der Dieselleitung oft zum Stillstand des Dieselmotors?", "a": ["weil die Luft die Dieselpest verursacht", "weil die Luft die Komprimierung des Treibstoffes verhindert", "weil die Luft die Rücklaufleitung blockiert", "weil die Luft den Treibstofffilter durch Oxydationsprodukte verstopft"], "c": 1}, {"code": "M5", "q": "Welche Antriebsteile, außer dem Motor selbst, benötigt ebenfalls Ölwechsel?", "a": ["der Ölkühler", "der Wasserbauscher", "der Turbolader", "das Wendegetriebe"], "c": 3}, {"code": "M6", "q": "Wann sind die Propeller eines Zweischraubenschiffes „außenschlagend“?", "a": ["wenn der rechte linksgängig ist und der linke rechtsgängig", "wenn der rechte rechtsgängig ist und der linke linksgängig", "wenn beide Propeller rechtsgängig sind", "wenn beide Propeller linksgängig sind"], "c": 1}, {"code": "M7", "q": "Wie wird die Vortriebskraft der Schiffsschraube auf den Rumpf übertragen?", "a": ["über ein Drucklager", "über das Wellenlager", "über die Zahnräder des Getriebes", "über das Stevenrohr"], "c": 0}, {"code": "M8", "q": "Wie funktionieren ruderlose Antriebe?", "a": ["mit Querstrahlrudern", "die Propeller sind hochklappbar", "die Propeller sind horizontal drehbar", "der Schiffsrumpf ist abknickbar"], "c": 2}, {"code": "M9", "q": "Warum soll man bei längeren Stehzeiten den Treibstofftank vollfüllen?", "a": ["damit das Schiff schwerer im Wasser liegt", "damit feuchte Luft von außen weniger Kondenswasser bilden kann", "damit zur Sicherheit immer volle Reserve vorhanden ist", "damit im Falle von Feuer der Tank brennt und nicht das Schiff"], "c": 1}, {"code": "M10", "q": "Was ist die Reichweite?", "a": ["diejenige Entfernung, welche mit dem Inhalt des Reservetanks zurückgelegt werden kann", "diejenige Entfernung, welche mit einem Zwischenstopp zurückgelegt werden kann", "diejenige Entfernung, welche mit dem halben Inhalt des Treibstofftanks zurückgelegt werden kann", "diejenige Entfernung, welche mit dem Inhalt des Treibstofftanks zurückgelegt werden kann"], "c": 3}, {"code": "M11", "q": "Gleitboote benötigen wegen der höheren Geschwindigkeit", "a": ["kleinere Ruderblätter", "dickere Ruderblätter", "tiefere Ruderblätter", "größere Ruderblätter"], "c": 0}, {"code": "M12", "q": "Welche grundsätzlichen Propellerdaten sind bei der Auswahl eines Propellers wichtig?", "a": ["Schnelligkeit und Lager", "Gewicht und Anlüftung", "Durchmesser und Steigung", "Kompressionsmus und Wuchtungsintervall"], "c": 2}, {"code": "S1", "q": "Vorsegel: Unterliek zu lose, Achterliek zu straff. Was ist zu tun?", "a": ["Holepunkt nach vorne", "Vorsegelschot fieren", "Holepunkt nach achtern", "Rollleine fieren"], "c": 2}, {"code": "S2", "q": "Was tut man beim Beiliegen?", "a": ["Fock back, Ruder auf Anluven", "Groß back, Ruder auf Abfallen", "Segel bergen, Ruder auf Anluven", "nimmt am Partner liegend, Groß back"], "c": 0}, {"code": "S3", "q": "Was muss ich am Ende des Reffens des Großsegels tun?", "a": ["Dirk anholen, Fall fieren, Schot fieren", "anluven, Fall dichtholen, Dirk dichtholen", "Schot fieren, Fall fieren, Dirk fieren", "Fall dichtholen, Dirk fieren, Schot trimmen"], "c": 3}, {"code": "S4", "q": "Wie stark ist der scheinbare Wind bei Raumwindkurs?", "a": ["immer null", "schwächer als der wahre Wind", "ebenso stark wie der wahre Wind", "stärker als der wahre Wind"], "c": 1}, {"code": "S5", "q": "Welchen Vorteil haben Lazy-Jacks und Lazy-Bags?", "a": ["das Großsegel wird beim Bergen aufgerollt", "das Großsegel wird beim Bergen geführt und aufgefangen", "das Großsegel braucht beim Setzen kein Fall", "das Großsegel wird beim Bergen automatisch nach achtern gezogen"], "c": 1}, {"code": "S6", "q": "Wann soll ein Segel bauchig getrimmt werden?", "a": ["bei Starkwind", "bei schralenden Winden", "bei schwachem Wind", "bei entgegenkommenden Winden"], "c": 2}, {"code": "S7", "q": "Wie wird ein Großsegel am Rollgroß gesetzt?", "a": ["es wird mit Zug am Großfall vom Großbaum gewickelt", "es wird mit Zug an der Großschot aus dem Großbaum gewickelt", "es wird mit Zug an der Dirk aus dem Großbaum gezogen", "es wird mit Zug am Großfall aus dem Mast gewickelt"], "c": 3}, {"code": "S8", "q": "Welche Seiten hat das Winddreieck?", "a": ["Wahrer Wind voraus, achterer Wind voraus, Wind von vorne", "Wahrer Wind, scheinbarer Wind, Fahrtwind", "Nordwind, Ostwind, Fallwind", "Bordwind, scheinbarer Wind, Wind von hinten"], "c": 1}, {"code": "S9", "q": "Was verbindet Mast und Baum?", "a": ["der Holepunkt des Baumes", "der Drehpunkt des Mastfalles", "die Gabelklaue", "der Lümmelbeschlag"], "c": 3}, {"code": "S10", "q": "Was ist ein Blister?", "a": ["leichtes, großes Vorsegel", "Regattasegel kleines Segel", "kleines, leichtes Vorsegel", "leichtes, großes Großsegel"], "c": 0}, {"code": "S11", "q": "Warum sind Multihulls oft leichter und schneller als Monohulls?", "a": ["weil sie nicht formstabil gebaut sind", "weil sie nicht leichteren Materialien gebaut sind", "weil sie nicht gewichtsstabil gebaut sind", "weil sie gewichtsstabil gebaut sind"], "c": 2}, {"code": "S12", "q": "Wozu kann ein Segelschiff ein ausfahrbares Schwert haben?", "a": ["gegen die Abdrift", "gegen Piraten", "anstatt des Ruders", "gegen seitliche Wellen"], "c": 0}, {"code": "S13", "q": "Was fällt unter „laufendes Gut“?", "a": ["Winschen und Taljen", "Sperren und Bäume", "Wanten und Stagen", "Fallen und Schoten"], "c": 3}, {"code": "S14", "q": "Was ist bei Mastbruch vorrangig zu tun?", "a": ["Segel reparieren", "herabhängende Teile festzurren oder entfernen", "herabhängende Teile nachschleppen zum späteren Bergen", "Notantenne an der Reling montieren"], "c": 1}]; let pool=[],i=0,points=0;
-const area=document.getElementById('area'); const groups=[...new Set(Q.map(x=>x.code[0]))];
-area.innerHTML='<option value="ALL">Alle Bereiche gemischt</option>'+groups.map(x=>`<option value="${x}">Bereich ${x}</option>`).join('');
-function shuffle(a){for(let j=a.length-1;j>0;j--){let k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]]}return a}
-function start(){pool=Q.filter(x=>area.value==='ALL'||x.code[0]===area.value).map(x=>JSON.parse(JSON.stringify(x)));shuffle(pool);i=0;points=0;startEl.hidden=true;done.hidden=true;quiz.hidden=false;show()}
-const startEl=document.getElementById('start'),quiz=document.getElementById('quiz'),done=document.getElementById('done');
-function show(){let x=pool[i];count.textContent=`Frage ${i+1} / ${pool.length} · ${x.code}`;score.textContent=`Richtig: ${points}`;question.textContent=x.q;answers.innerHTML='';next.hidden=true;
-let opts=x.a.map((t,n)=>({t,n}));shuffle(opts);opts.forEach(o=>{let b=document.createElement('button');b.className='ans';b.textContent=o.t;b.onclick=()=>choose(b,o.n,x.c);answers.appendChild(b)})}
-function choose(btn,n,c){[...answers.children].forEach(b=>b.disabled=true); if(n===c){btn.classList.add('good');points++}else{btn.classList.add('bad');[...answers.children].forEach(b=>{if(b.textContent===pool[i].a[c])b.classList.add('good')})} score.textContent=`Richtig: ${points}`;next.hidden=false}
-function nextQ(){i++;if(i<pool.length)show();else{quiz.hidden=true;done.hidden=false;let p=Math.round(points/pool.length*100);result.textContent=`${points} von ${pool.length} richtig (${p} %)`;detail.textContent=p>=75?'75-%-Marke erreicht.':'Unter 75 % – weiter üben.'}}
-</script></body></html>
+button,select{font-size:17px}
+button{border:0;border-radius:10px;padding:13px 16px;cursor:pointer}
+.primary{background:#07599c;color:white}
+.ans{display:block;width:100%;text-align:left;background:#eef4fa;margin:9px 0}
+.good{background:#d9f5df!important}
+.bad{background:#ffdede!important}
+.muted{color:#607080}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#result{font-size:22px;font-weight:bold}
+select{padding:10px;border-radius:8px}
+</style>
+</head>
+
+<body>
+<header>
+<h1>Yachtschule Schwaiger</h1>
+<div>FB2 · Prüfungsfragen G</div>
+</header>
+
+<main>
+<div id="start" class="card">
+<h2>Single Choice</h2>
+<p>Wähle einen Bereich oder übe alle Fragen gemischt.</p>
+<div class="row">
+<select id="area"></select>
+<button class="primary" onclick="start()">Start</button>
+</div>
+</div>
+
+<div id="quiz" class="card" hidden>
+<div class="row">
+<b id="count"></b>
+<span id="score" style="margin-left:auto"></span>
+</div>
+<h2 id="question"></h2>
+<div id="answers"></div>
+<button id="next" class="primary" onclick="nextQ()" hidden>Nächste Frage</button>
+</div>
+
+<div id="done" class="card" hidden>
+<h2>Ergebnis</h2>
+<div id="result"></div>
+<p id="detail"></p>
+<button class="primary" onclick="start()">Noch einmal</button>
+</div>
+</main>
+
+<script>
+const Q=[
+{"code":"A1","q":"Welche Befestigungsart von Leinen ist unter Zug kontrolliert lösbar?","a":["Leine auf Zugschäkel","Klampenschlag","Roringstek","Palstek"],"c":1},
+{"code":"A2","q":"Wie kann Kunstfasertauwerk aufgebaut sein?","a":["aus einem Material geschlagen oder mit Mantel und Kern aus zwei verschiedenen Materialien","aus einem Material gezogen oder mit zwei verschiedenen Materialien verdreht","aus zwei verschiedenen Materialien geschlagen oder mit Mantel und Kern aus einem Material","aus zwei verschiedenen Materialien geflochten oder mit Mantel und Kern verschmolzen"],"c":0},
+{"code":"A3","q":"Wie sollen Leinen und Fender in Gezeitengewässern beim Liegen an fixen Kais angebracht werden?","a":["besonders eine Fender, Leinen ganz dicht","nur wenige Fender, Leinen lang","mit Fenderbrett, das mit Leinen gesichert wird","Fender in verschiedenen Höhen, Leinen besonders lang"],"c":3},
+{"code":"A4","q":"Sie haben eine linksgängige Schraube. Auf welche Seite wird das Heck bei Fahrt Voraus versetzt?","a":["nach Steuerbord","nach Backbord","es wird nicht das Heck nach Stb versetzt sondern der Bug","es wird nicht das Heck nach Bb versetzt sondern der Bug"],"c":0},
+{"code":"A5","q":"Haben Motorboote eine Abdrift?","a":["ja, aber wenig wegen des großen Lateralplanes","nein, Motorboote haben keine Abdrift","ja, aufgrund des kleinen Lateralplanes","nur bei höherer Geschwindigkeit"],"c":2},
+{"code":"A6","q":"Welche Maßnahme verbessert die Haltekraft eines Ankers?","a":["mehr Kette oder Trosse stecken","den Anker der Tragbarkeit","den Anker auf Slip nehmen","das Setzen eines schweren Ankerballs"],"c":0},
+{"code":"A7","q":"Soll die Ankerkette mit dem Schiff mit einem Schäkel fix verbunden sein?","a":["ja, die Kette muss angeschweißt sein","nein, die Kette soll mit einem Bändsel mit dem Kettenkasten verbunden sein","nein, sie soll überhaup nicht verbunden sein","ja, weil die Schiffshaftpflicht den durch Verordnung festgelegt hat"],"c":1},
+{"code":"A8","q":"Was wird üblicherweise bei einer Sicherheitseinweisung erklärt?","a":["die Zuständigkeit des Sicherheitsdienstes des Hafens","die privaten Versicherungen der Crewmitglieder","die Sicherheit der nautischen Versicherungen","die sicherheitsrelevanten nautischen Ausrüstung"],"c":3},
+{"code":"A9","q":"Wann wird die Gastlandflagge genutzt?","a":["wenn der Schiffsführer eine andere Nationalität hat als das Boot","beim Einlaufen in fremde Hoheitsgewässer","nur auf Charterbooten","im Gastland mindestens dann, wenn die Nationalität wechselt"],"c":1},
+{"code":"A10","q":"Welche Geschwindigkeit ist bei Sportbooten schadstoffärmer und dadurch ökonomischer?","a":["Geschwindigkeit unter Rumpfgeschwindigkeit","Geschwindigkeit, welche mit Leerlaufdrehzahl des Motors erreicht wird","Geschwindigkeit knapp unter Gleiten","Geschwindigkeit über Rumpfgeschwindigkeit"],"c":0},
+
+{"code":"B1","q":"Was sind Spanten?","a":["tragende Längsverbände eines Schiffsrumpfes","nichttragende Längsverbände","Querverbände eines Schiffsrumpfes","Quervorrichtungen in der Kielnaht"],"c":2},
+{"code":"B2","q":"Was zeigt die Stabilitätskurve eines Schiffes?","a":["den Verlauf der Kipkraft über dem Krängungswinkel","die Verlagerung des Gewichtsschwerpunktes über dem Krängungswinkel","den Verlauf des aufrichtenden Moments über dem Krängungswinkel","die Verlagerung des Auftriebsschwerpunktes über dem Krängungswinkel"],"c":2},
+{"code":"B3","q":"Wie wird auf Booten meistens das Süßwasser zu den verschiedenen Süßwasserhähnen verteilt?","a":["mit einer Druckwasserpumpe","mit einer Bilgepumpe","mit der Kühlwasserpumpe","mit einer Fußpumpe"],"c":0},
+{"code":"B4","q":"Wie wird die Kapazität eines Akkumulators angegeben?","a":["in Volt (V)","in Mikrofarad (µF)","in Amperestunden (Ah)","in Gramm pro cm³"],"c":2},
+
+{"code":"C1","q":"Wie wird ein Punkt auf der Erdoberfläche normalerweise angegeben?","a":["nach Datum und Uhrzeit","nach Abstand von einer Landmarke","nach Planquadrat-Nummer","nach Breite und Länge"],"c":3},
+{"code":"C2","q":"Welche Anforderungen erfüllt eine Mercatorkarte?","a":["sie ist flächentreu","sie ist winkeltreu und längentreu","sie hat über die ganze Fläche den gleichen Maßstab","sie ist in gnomonischer Projektion ausgeführt"],"c":1},
+{"code":"C3","q":"Was ist ein Tidenkalender?","a":["Ein Kalender mit oft grafischen Darstellungen des Tidenverlaufes an einem Ort","Ein Kalender mit allen vorausgebaren Springfluten für einen Ort","Ein Kalender mit typischen Tidenverläufen für mehrere Jahre","Ein Kalender mit oft grafischen Darstellungen des Tidenverlaufes in allen Küstenstädten des Mittelmeeres"],"c":0},
+{"code":"C4","q":"Welche Vorteile hat der konventionelle Magnetkompass?","a":["seine Anzeigewerte können auch von anderen Geräten benutzt werden","er funktioniert auch direkt am magnetischen Nordpol","er funktioniert auch bei Krängung von mehr als 20°","er benötigt keine Stromversorgung"],"c":3},
+{"code":"C5","q":"Müssen Sie das Radargerät zur Kollisionsverhütung verwenden, wenn Sie es an Bord haben?","a":["nein, Sportschiffsradargeräte dürfen nicht zur Kollisionsverhütung eingesetzt werden","nein","ja, aber nur wenn der Radaroperator einen zweitägigen Radarkurs absolviert hat","ja"],"c":3},
+{"code":"C6","q":"Wann fährt eine Hundekurve?","a":["wenn der Rudergänger den rechtweisenden Kurs hält, dabei aber seitlich abgetrieben wird","wenn der Rudergänger optisch auf ein Ziel zufährt, dabei aber seitlich abgetrieben wird","wenn der Rudergänger missweisend auf ein Ziel zufährt und es dadurch verfehlt","wenn der Rudergänger auf ein Ziel zufährt und dabei immer den selben Kompasskurs beibehält"],"c":1},
+{"code":"C7","q":"Wie wählt man Peilobjekte vom Gesichtspunkt der Genauigkeit gesehen?","a":["große Objekte sind genauer","ferne Objekte sind genauer","spitze Objekte sind genauer","nahe Objekte sind genauer"],"c":2},
+{"code":"C8","q":"Sie sehen in der Nacht vor sich ein Leuchtfeuer mit durchgehendem Funkelfeuer. Welches Feuer sehen Sie?","a":["Kardinales Zeichen „N“","Kardinales Zeichen „W“","Kardinales Zeichen „S“","Kardinales Zeichen „E“"],"c":0},
+
+{"code":"D1","q":"Welche Vorschriften werden in SOLAS definiert?","a":["Unterschiede zwischen nationalen und internationalen Vorschriften zur Sicherheit von Personen auf See","Nationale Vorschriften zur Sicherheit von Ladung und Schiffen","Internationale Vorschriften zur Sicherheit von Personen auf See","Nationale Vorschriften zur Sicherheit von Personen auf See"],"c":2},
+{"code":"D2","q":"Sie sehen ein Fahrzeug mit nur zwei Rundumlichtern, rot übereinander (horizontale Lage), um welches Fahrzeug handelt es sich?","a":["manövrierunfähiges Fahrzeug auf Grund ohne Fahrt durchs Wasser","manövrierunfähiges Fahrzeug in Fahrt mit Fahrt durchs Wasser","manövrierunfähiges Fahrzeug vor Anker mit Fahrt durchs Wasser","manövrierunfähiges Fahrzeug in Fahrt ohne Fahrt durchs Wasser"],"c":3},
+{"code":"D3","q":"Was verstehen Sie unter dem Ausdruck „Fahrzeuge haben einander in Sicht“?","a":["wenn jedes Fahrzeug vom anderen optisch wahrgenommen werden kann","wenn sie einander durch akustische Signale wahrnehmen können","wenn jedes Fahrzeug vom anderen auf dem Radarschirm ein eindeutiges Echo erzeugt","wenn jedes Fahrzeug das andere bemerkt hat"],"c":0},
+{"code":"D4","q":"Welche Behörden müssen beim Einklarieren in Kroatien aufgesucht werden?","a":["Meldeamt, Bank, Feuerwehr","Hydrographisches Institut, Hafenkapitän","Polizei, Zoll, Hafenamt","Marinabüro, Polizei"],"c":2},
+
+{"code":"E1","q":"Die gebräuchlichste Temperaturskala auf Thermometern im europäischen Raum ist...","a":["Grad Celsius","Grad Kelvin","Grad Fahrenheit","Kcal"],"c":0},
+{"code":"E2","q":"In einer Wetterkarte steht diese graphische Darstellung für...","a":["eine Warmfront","eine Kaltfront","eine symmetrische Darstellung von Quellwolken","eine Okklusionsfront"],"c":0},
+{"code":"E3","q":"Warum ist der Wind am Boden geringer als der Wind in 10 Metern Höhe?","a":["wegen der Erwärmung der Luft an der Erdoberfläche","wegen der rascheren Erdrotation in 10 Metern Höhe","wegen stärkerer Auswirkungen der Windverwirbelungen","wegen der Reibung an der Erdoberfläche"],"c":3},
+{"code":"E4","q":"Wie heißen Wolken, welche als Einzelwolken auftreten?","a":["Rundwolken","Cumulus","Cirrus","Einzelgänger"],"c":1},
+{"code":"E5","q":"Welche Zugrichtung haben Tiefdruckgebiete in Europa meistens?","a":["von Süd nach Nord","von West nach Ost","von Ost nach West","von Nord nach Süd"],"c":1},
+{"code":"E6","q":"Wann spricht man von einer „Okklusionsfront“ in einem Tiefdruckgebiet?","a":["wenn die Kaltfront einen Trog bildet","wenn die Warmfront die Kaltfront eingeholt hat","wenn das Tiefdruckgebiet ein Hochdruckgebiet aufsaugt","wenn die Kaltfront die Warmfront eingeholt hat"],"c":3},
+{"code":"E7","q":"Zur Definition der Richtung von Wind wird üblicherweise welche Richtung verwendet?","a":["die Richtung aus der der Wind kommt","die Richtung der Isobaren plus 15 Grad","die Richtung wohin der Wind weht","die Richtung der Windfahne abzüglich der Missweisung"],"c":0},
+{"code":"E8","q":"Wie kündigt sich sehr Starkwind oft an?","a":["schnelles Fallen des Luftdruckes","schnelles Steigen der Lufttemperatur","durch entfernte Windgeräusche","schnelles Fallen der Luftfeuchtigkeit"],"c":0},
+{"code":"E9","q":"Wofür steht „MSI“?","a":["Maritime Sicherheits Institution","Maritime Search and Rescue Information","Maritime Safety Information","Maritime Schiffs Identifikation"],"c":2},
+{"code":"E10","q":"In welcher Reihenfolge werden Seewetterberichte versendet?","a":["Warnungen, Großwetterlage, Vorhersage","keine einheitliche Reihenfolge, je nach Land verschieden","erst Synopsis, weitere Reihenfolge nach Dringlichkeit","eine einheitliche Reihenfolge wird nur von den Mitgliedsländern der UNO garantiert"],"c":0},
+{"code":"E11","q":"Was versteht man unter „Seegang“?","a":["die unregelmäßig Bewegung der See in engen Fahrrinnen","das Gehen mit bloßen Füßen am Wasser","die Richtung der durch den Wind strömenden See","die durch Wind verursachte unregelmäßige Bewegung der See"],"c":3},
+{"code":"E12","q":"Wie ändern Gezeitenströme ihre Richtung?","a":["vor Vollmond andere Richtung als nach Vollmond","180 Grad bei Vollmond, gar nicht bei Halbmond","von Hochwasser andere Richtung als nach Hochwasser","nach jedem zweiten Hochwasser andere Richtung"],"c":2},
+
+{"code":"F1","q":"Warum kann man mit einem AIS Empfänger ausrüstungspflichtige Schiffe am Kartenplotter sehen, aber Eisberge nicht?","a":["weil ausrüstungspflichtige Schiffe ständig AIS-Signale aussenden, Eisberge nicht","weil ausrüstungspflichtige Schiffe ständig AIS-Signale aussenden, Eisberge diese aber nicht zurückwerfen","weil ausrüstungspflichtige Schiffe ständig GPS-Signale aussenden, Eisberge aber nicht reflektieren","weil ausrüstungspflichtige Schiffe EPIRB an Bord haben, Eisberge nur SART"],"c":0},
+{"code":"F2","q":"Wann bezeichnet man eine Rettungsweste als ohnmachtsicher?","a":["wenn sie zusätzlich eine Trillerpfeife hat","wenn sie mit einem roten „O“ gekennzeichnet ist","wenn sie auch unter ungünstigen Bedingungen angelegt werden kann","wenn sie den Kopf über Wasser hält"],"c":3},
+{"code":"F3","q":"Auf welchem UKW-Sprechfunk-Kanal sollten Sie einen Notruf durchführen?","a":["Kanal 10","Kanal 16","Kanal 06","Kanal 70"],"c":1},
+{"code":"F4","q":"Was sollte als Schlechtwetter in der Besprechung mit der Crew ausgearbeitet werden?","a":["ein Plan zum abwechselnden Tragen der Rettungswesten","ein Routenplan für die ganze Woche","eine neuerliche Sicherheitseinweisung","eine genaue Wacheinteilung"],"c":3},
+{"code":"F5","q":"Womit sollte aus Sicherheitsgründen jedes Crewmitglied vertraut sein?","a":["mit der Bedienung des Wassertanks und der Trinkmischbatter","mit der Bedienung des Rudergestänges und der Motorabstützung","mit dem Tausch des Ruderblattes und der Motorabstützung","mit der Bedienung der Ruderanlage und der Motorsteuerung"],"c":3},
+{"code":"F6","q":"Welches Manöver empfiehlt sich für die Benutzung der Bergeschlaufe wenn diese über Bord geworfen wurde?","a":["kreisförmige Fahrt rund um den Verunglückten","Würgemanöver rund um einen Kreis","abstoppen und Leine verlängern bis die Bergeschlaufe zum Verunglückten treibt","direktes Ansteuern des Verunglückten über Bug"],"c":0},
+{"code":"F7","q":"Was wird mit dem Begriff „Leegwall“ bezeichnet?","a":["ein Schiff ist aufgelaufen und liegt im Luv auf einem Wall","ein Schiff in Luv einer Küste kann seinen Abstand zur Küste aus eigener Kraft nicht mehr vergrößern","ein Schiff in Lee einer Küste kann diese aus eigener Kraft nicht mehr erreichen","ein zweiter, paralleler Wellenbrecher aus großen Steinen und Felsbrocken im Luv des Ersten"],"c":1},
+{"code":"F8","q":"Sie müssen einen Brand löschen. Wie gehen Sie dabei vor?","a":["ich richte den Löschstrahl des Feuerlöschers direkt von oben in die Flammen","ich richte den Löschstrahl des Feuerlöschers auf die noch nicht brennende Umgebung des Feuers","um ein Übergreifen der Flammen zu verhindern","ich richte den Löschstrahl des Feuerlöschers gegen die Windrichtung neben den Brandherd"],"c":1},
+{"code":"F9","q":"Was ist eine gute Methode um jemanden zu finden der vor kurzer Zeit über Bord gegangen sein muss?","a":["im Rotorkreis 2kt zirkulieren","Kreise mit Durchmesser von einer halben Seemeile zu fahren","auf der Kiellinie zurückfahren","200 Meter neben der Kiellinie zurückfahren"],"c":2},
+{"code":"F10","q":"Warum spielen Kochstelle und Motorraum bei der Brandverhütung eine wichtige Rolle?","a":["weil dort oft Brände entstehen","weil dort kurz gesetzlicher Vorschrift die Feuerlöscher angebracht sind","weil dort Schutz zu suchen ist im Schiffsraum","weil die Kochstelle mit dem Kühlwasser des Motors gelöscht wird"],"c":0},
+
+{"code":"M1","q":"Wie heißt dieser vom Motor angetriebene Bauteil?","a":["Schaltpumpe","Pumpe für Jettrieb","Impellerpumpe","Ölpumpe"],"c":2},
+{"code":"M2","q":"Warum ist Benzin als Treibstoff gefährlicher als Dieselmotortreibstoff?","a":["Benzin ist geruchlos und breitet sich unter Wasser aus","Benzin kann ein explosionsfähiges Gemisch mit Wasser bilden","Benzin kann ein explosionsfähiges Gemisch mit Luft bilden","Benzin entzündet sich schon bei Raumtemperatur"],"c":2},
+{"code":"M3","q":"Was verdichtet der Turbolader?","a":["die Ansaugluft des Motors","das Kühlwasser des Motors","den Dieseltreibstoff der in die Zylinder eingespritzt wird","das Schmieröl der Kolbenringe"],"c":0},
+{"code":"M4","q":"Warum führt Luft in der Dieselleitung oft zum Stillstand des Dieselmotors?","a":["weil die Luft die Dieselpest verursacht","weil die Luft die Komprimierung des Treibstoffes verhindert","weil die Luft die Rücklaufleitung blockiert","weil die Luft den Treibstofffilter durch Oxydationsprodukte verstopft"],"c":1},
+{"code":"M5","q":"Welche Antriebsteile, außer dem Motor selbst, benötigt ebenfalls Ölwechsel?","a":["der Ölkühler","der Wasserbauscher","der Turbolader","das Wendegetriebe"],"c":3},
+{"code":"M6","q":"Wann sind die Propeller eines Zweischraubenschiffes „außenschlagend“?","a":["wenn der rechte linksgängig ist und der linke rechtsgängig","wenn der rechte rechtsgängig ist und der linke linksgängig","wenn beide Propeller rechtsgängig sind","wenn beide Propeller linksgängig sind"],"c":1},
+{"code":"M7","q":"Wie wird die Vortriebskraft der Schiffsschraube auf den Rumpf übertragen?","a":["über ein Drucklager","über das Wellenlager","über die Zahnräder des Getriebes","über das Stevenrohr"],"c":0},
+{"code":"M8","q":"Wie funktionieren ruderlose Antriebe?","a":["mit Querstrahlrudern","die Propeller sind hochklappbar","die Propeller sind horizontal drehbar","der Schiffsrumpf ist abknickbar"],"c":2},
+{"code":"M9","q":"Warum soll man bei längeren Stehzeiten den Treibstofftank vollfüllen?","a":["damit das Schiff schwerer im Wasser liegt","damit feuchte Luft von außen weniger Kondenswasser bilden kann","damit zur Sicherheit immer volle Reserve vorhanden ist","damit im Falle von Feuer der Tank brennt und nicht das Schiff"],"c":1},
+{"code":"M10","q":"Was ist die Reichweite?","a":["diejenige Entfernung, welche mit dem Inhalt des Reservetanks zurückgelegt werden kann","diejenige Entfernung, welche mit einem Zwischenstopp zurückgelegt werden kann","diejenige Entfernung, welche mit dem halben Inhalt des Treibstofftanks zurückgelegt werden kann","diejenige Entfernung, welche mit dem Inhalt des Treibstofftanks zurückgelegt werden kann"],"c":3},
+{"code":"M11","q":"Gleitboote benötigen wegen der höheren Geschwindigkeit","a":["kleinere Ruderblätter","dickere Ruderblätter","tiefere Ruderblätter","größere Ruderblätter"],"c":0},
+{"code":"M12","q":"Welche grundsätzlichen Propellerdaten sind bei der Auswahl eines Propellers wichtig?","a":["Schnelligkeit und Lager","Gewicht und Anlüftung","Durchmesser und Steigung","Kompressionsmus und Wuchtungsintervall"],"c":2},
+
+{"code":"S1","q":"Vorsegel: Unterliek zu lose, Achterliek zu straff. Was ist zu tun?","a":["Holepunkt nach vorne","Vorsegelschot fieren","Holepunkt nach achtern","Rollleine fieren"],"c":2},
+{"code":"S2","q":"Was tut man beim Beiliegen?","a":["Fock back, Ruder auf Anluven","Groß back, Ruder auf Abfallen","Segel bergen, Ruder auf Anluven","nimmt am Partner liegend, Groß back"],"c":0},
+{"code":"S3","q":"Was muss ich am Ende des Reffens des Großsegels tun?","a":["Dirk anholen, Fall fieren, Schot fieren","anluven, Fall dichtholen, Dirk dichtholen","Schot fieren, Fall fieren, Dirk fieren","Fall dichtholen, Dirk fieren, Schot trimmen"],"c":3},
+{"code":"S4","q":"Wie stark ist der scheinbare Wind bei Raumwindkurs?","a":["immer null","schwächer als der wahre Wind","ebenso stark wie der wahre Wind","stärker als der wahre Wind"],"c":1},
+{"code":"S5","q":"Welchen Vorteil haben Lazy-Jacks und Lazy-Bags?","a":["das Großsegel wird beim Bergen aufgerollt","das Großsegel wird beim Bergen geführt und aufgefangen","das Großsegel braucht beim Setzen kein Fall","das Großsegel wird beim Bergen automatisch nach achtern gezogen"],"c":1},
+{"code":"S6","q":"Wann soll ein Segel bauchig getrimmt werden?","a":["bei Starkwind","bei schralenden Winden","bei schwachem Wind","bei entgegenkommenden Winden"],"c":2},
+{"code":"S7","q":"Wie wird ein Großsegel am Rollgroß gesetzt?","a":["es wird mit Zug am Großfall vom Großbaum gewickelt","es wird mit Zug an der Großschot aus dem Großbaum gewickelt","es wird mit Zug an der Dirk aus dem Großbaum gezogen","es wird mit Zug am Großfall aus dem Mast gewickelt"],"c":3},
+{"code":"S8","q":"Welche Seiten hat das Winddreieck?","a":["Wahrer Wind voraus, achterer Wind voraus, Wind von vorne","Wahrer Wind, scheinbarer Wind, Fahrtwind","Nordwind, Ostwind, Fallwind","Bordwind, scheinbarer Wind, Wind von hinten"],"c":1},
+{"code":"S9","q":"Was verbindet Mast und Baum?","a":["der Holepunkt des Baumes","der Drehpunkt des Mastfalles","die Gabelklaue","der Lümmelbeschlag"],"c":3},
+{"code":"S10","q":"Was ist ein Blister?","a":["leichtes, großes Vorsegel","Regattasegel kleines Segel","kleines, leichtes Vorsegel","leichtes, großes Großsegel"],"c":0},
+{"code":"S11","q":"Warum sind Multihulls oft leichter und schneller als Monohulls?","a":["weil sie nicht formstabil gebaut sind","weil sie nicht leichteren Materialien gebaut sind","weil sie nicht gewichtsstabil gebaut sind","weil sie gewichtsstabil gebaut sind"],"c":2},
+{"code":"S12","q":"Wozu kann ein Segelschiff ein ausfahrbares Schwert haben?","a":["gegen die Abdrift","gegen Piraten","anstatt des Ruders","gegen seitliche Wellen"],"c":0},
+{"code":"S13","q":"Was fällt unter „laufendes Gut“?","a":["Winschen und Taljen","Sperren und Bäume","Wanten und Stagen","Fallen und Schoten"],"c":3},
+{"code":"S14","q":"Was ist bei Mastbruch vorrangig zu tun?","a":["Segel reparieren","herabhängende Teile festzurren oder entfernen","herabhängende Teile nachschleppen zum späteren Bergen","Notantenne an der Reling montieren"],"c":1}
+];
+
+let pool=[],i=0,points=0;
+
+const area=document.getElementById('area');
+const groups=[...new Set(Q.map(x=>x.code[0]))];
+
+area.innerHTML=
+'<option value="ALL">Alle Bereiche gemischt</option>'+
+groups.map(x=>`<option value="${x}">Bereich ${x}</option>`).join('');
+
+function shuffle(a){
+for(let j=a.length-1;j>0;j--){
+let k=Math.floor(Math.random()*(j+1));
+[a[j],a[k]]=[a[k],a[j]]
+}
+return a
+}
+
+const startEl=document.getElementById('start'),
+quiz=document.getElementById('quiz'),
+done=document.getElementById('done');
+
+function start(){
+pool=Q.filter(x=>area.value==='ALL'||x.code[0]===area.value)
+.map(x=>JSON.parse(JSON.stringify(x)));
+shuffle(pool);
+i=0;
+points=0;
+startEl.hidden=true;
+done.hidden=true;
+quiz.hidden=false;
+show()
+}
+
+function show(){
+let x=pool[i];
+count.textContent=`Frage ${i+1} / ${pool.length} · ${x.code}`;
+score.textContent=`Richtig: ${points}`;
+question.textContent=x.q;
+answers.innerHTML='';
+next.hidden=true;
+
+let opts=x.a.map((t,n)=>({t,n}));
+shuffle(opts);
+
+opts.forEach(o=>{
+let b=document.createElement('button');
+b.className='ans';
+b.textContent=o.t;
+b.onclick=()=>choose(b,o.n,x.c);
+answers.appendChild(b)
+})
+}
+
+function choose(btn,n,c){
+[...answers.children].forEach(b=>b.disabled=true);
+
+if(n===c){
+btn.classList.add('good');
+points++
+}else{
+btn.classList.add('bad');
+[...answers.children].forEach(b=>{
+if(b.textContent===pool[i].a[c])b.classList.add('good')
+})
+}
+
+score.textContent=`Richtig: ${points}`;
+next.hidden=false
+}
+
+function nextQ(){
+i++;
+if(i<pool.length){
+show()
+}else{
+quiz.hidden=true;
+done.hidden=false;
+let p=Math.round(points/pool.length*100);
+result.textContent=`${points} von ${pool.length} richtig (${p} %)`;
+detail.textContent=p>=75?'75-%-Marke erreicht.':'Unter 75 % – weiter üben.'
+}
+}
+</script>
+</body>
+</html>
