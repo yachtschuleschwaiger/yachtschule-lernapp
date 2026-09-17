@@ -14,6 +14,26 @@ header p{margin:6px 0 0;font-size:18px}
 main{max-width:760px;margin:20px auto;padding:0 15px}
 .card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 3px 14px #0002;text-align:center}
 
+.slideshow{
+position:relative;
+width:100%;
+height:360px;
+overflow:hidden;
+border-radius:14px;
+margin-bottom:20px;
+background:#dfe8ee
+}
+.slide{
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:opacity 1.1s ease
+}
+.slide.active{opacity:1}
+
 .choice{
 display:block;
 text-decoration:none;
@@ -31,14 +51,12 @@ font-size:14px;
 font-weight:normal;
 margin-top:6px
 }
-
 .slogan{
 font-size:19px;
 font-weight:bold;
 color:#07549a;
 margin-top:22px
 }
-
 .home{
 display:inline-block;
 margin-top:18px;
@@ -49,9 +67,9 @@ color:#07549a;
 text-decoration:none;
 font-weight:bold
 }
-
 @media(max-width:600px){
 header h1{font-size:24px}
+.slideshow{height:230px}
 .choice{font-size:19px;padding:17px}
 }
 </style>
@@ -66,6 +84,12 @@ header h1{font-size:24px}
 
 <main>
 <div class="card">
+
+<div class="slideshow">
+<img class="slide active" src="fb2-bild-01.webp" alt="Segelyacht Maxima">
+<img class="slide" src="fb2-bild-02.webp" alt="Segelyacht auf See">
+<img class="slide" src="fb2-bild-03.webp" alt="Yachtschule Schwaiger">
+</div>
 
 <h2>FB2 Lern-App</h2>
 <p>Wähle den gewünschten Fragenbereich:</p>
@@ -95,6 +119,16 @@ Zur Yachtschule Schwaiger Homepage
 
 </div>
 </main>
+
+<script>
+const slides=document.querySelectorAll('.slide');
+let i=0;
+setInterval(()=>{
+slides[i].classList.remove('active');
+i=(i+1)%slides.length;
+slides[i].classList.add('active');
+},4500);
+</script>
 
 </body>
 </html>
