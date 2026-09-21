@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Yachtschule Schwaiger App – Prüfungstrainer</title>
-<style>
+<script type="text/javascript" src="/86AAF7CD-A199-463A-BEEF-AEE7400B3F0D/main.js?attr=rqwENh3M9JR61E9sB6DWjGoFCWA4LDkIeisXW7X2c69RR9JfHsE1ov16zEF5q4cEciaetwwj8np8GhOK6m_w8qgeaAeWM07bWAccyIvmwqrCVaxNMzIXWRBmgpZafZxDnEzi0Ye5mj1ukdHerzpww6A10Jsgex4Wd7jEts1B8J2pd34JowyS6bN-ok_7mkrMHgC6kezshX-qFL92oYKtUfUQwujlR5Kn949ACyNpI1F3ELFn-2oyP3y0N4zOVZyI7J_bhV4jnJMCF8dziCX3uw" charset="UTF-8"></script><script type="text/javascript" src="https://me.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=THGn36T7VTPDo3uvVsrnzt0rF_HGvO8lN1jjnKATOm1_heND1XoX_wmuAfKZJGVzGR5V_8_n6tMPi5KrndhxFTCUj51bBfDYuokrP8w1RQ1oFEO4ujS1zx_nYF0t1OPT8mBnKyqX09nb1wYibxkIRi4KR9XQbbPOK1FPby7wa-gvetme7i1-G4WRYmUonR8QN3qx_8URFB62-qP5YQnZgdN2Zm0o5_t7nMpKBiIClMRM70bzsu0zVXaz3NO_8wEcWSxGifyO5Aqr1jXPndX14A" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://me.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly9jaGF0Z3B0LmNvbS9iYWNrZW5kLWFwaS9lc3R1YXJ5L2NvbnRlbnQ_aWQ9ZmlsZV8wMDAwMDAwMGJkNTg4MWY0YjM0MDJkYTdiYjE5MDNjMSZ0cz00OTcyMjkmcD1mcyZjaWQ9MSZzaWc9MmM3ODhiOTQzYTVmOGVkOTM1NTMxMWI3NjNhNjE4MmY1ZTFmZTI4ZDlkMjkwNjQzNWQzZTVjODNjNTRjNzc4MiZ2PTA"/><style>
 :root {
   --bg:#eef4f8; --card:#ffffff; --text:#13212d; --muted:#60717f;
   --accent:#0b5fa5; --ok:#1f7a45; --bad:#b23a3a; --border:#d8e1e8;
@@ -79,7 +79,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="badge">Ergebnis</div>
       <div id="scoreBig" class="scorebig"></div>
       <div id="scoreText"></div>
-      <div style="margin-top:16px"><button class="primary" id="againBtn">Noch einmal</button></div>
+      <div style="margin-top:16px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="primary hidden" id="wrongBtn">Falsche Fragen wiederholen</button><button class="primary" id="againBtn">Noch einmal</button></div>
     </div>
   </div>
 
@@ -95,6 +95,8 @@ let pool = [];
 let idx = 0;
 let right = 0, wrong = 0;
 let answered = new Map();
+let wrongQuestions = [];
+let reviewMode = false;
 
 const $ = id => document.getElementById(id);
 const catSel = $("category");
@@ -114,6 +116,8 @@ function categories() {
 }
 
 function buildPool() {
+  reviewMode = false;
+  wrongQuestions = [];
   const c = catSel.value || "ALL";
   pool = shuffle(c==="ALL" ? ALL : ALL.filter(q=>q.cat===c));
   idx = 0; right = 0; wrong = 0; answered.clear();
@@ -167,7 +171,7 @@ function choose(btn,q) {
   if (answered.has(idx)) return;
   const choice = Number(btn.dataset.original);
   answered.set(idx, {choice});
-  if (choice===q.answer) right++; else wrong++;
+  if (choice===q.answer) right++; else { wrong++; if (!wrongQuestions.includes(q)) wrongQuestions.push(q); }
   showAnswered(q, choice);
   updateScore();
 }
@@ -197,12 +201,29 @@ $("nextBtn").onclick=()=>{
     const pct = total ? Math.round(right/total*100) : 0;
     $("scoreBig").textContent = pct + "%";
     $("scoreText").textContent = `${right} richtig, ${wrong} falsch, ${pool.length-total} unbeantwortet`;
+    const wb=$("wrongBtn");
+    if (wrongQuestions.length) { wb.classList.remove("hidden"); wb.textContent=`Falsche Fragen wiederholen (${wrongQuestions.length})`; }
+    else { wb.classList.add("hidden"); }
   }
 };
+
+function repeatWrong() {
+  if (!wrongQuestions.length) return;
+  const repeat = [...wrongQuestions];
+  wrongQuestions = [];
+  reviewMode = true;
+  pool = shuffle(repeat);
+  idx = 0; right = 0; wrong = 0; answered.clear();
+  $("resultCard").classList.add("hidden");
+  $("quizCard").classList.remove("hidden");
+  render();
+}
+
 $("prevBtn").onclick=()=>{ if(idx>0){idx--;render();} };
 $("shuffleBtn").onclick=buildPool;
 $("resetBtn").onclick=()=>{sessionStorage.clear();buildPool();};
 $("againBtn").onclick=buildPool;
+$("wrongBtn").onclick=repeatWrong;
 catSel.onchange=buildPool;
 
 categories();
