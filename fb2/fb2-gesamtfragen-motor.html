@@ -22,18 +22,8 @@ const count=document.getElementById('count'),score=document.getElementById('scor
 const groups=[...new Set(Q.map(x=>x.code.split(' ')[1][0]))];
 area.innerHTML='<option value="ALL">Alle Sachgebiete</option>'+groups.map(x=>`<option value="${x}">Sachgebiet ${x}</option>`).join('');
 function sh(a){for(let j=a.length-1;j>0;j--){let k=Math.floor(Math.random()*(j+1));[a[j],a[k]]=[a[k],a[j]]}return a}
-function startQuiz(){pool=Q.filter(x=>area.value==='ALL'||x.code.split(' ')[1][0]===area.value).map(x=>JSON.parse(JSON.stringify(x)));sh(pool);i=0;points=0;start.hidden=true;done.hidden=true;quiz.hidden=false;show()}
+function startQuiz(){pool=Q.filter(x=>area.value==='ALL'||x.code.split(' ')[1][0]===area.value).slice();sh(pool);i=0;points=0;start.hidden=true;done.hidden=true;quiz.hidden=false;show()}
 function show(){let x=pool[i];count.textContent=`Frage ${i+1} / ${pool.length} · ${x.code}`;score.textContent=`Richtig: ${points}`;question.textContent=x.q;answers.innerHTML='';next.hidden=true;let o=x.a.map((t,n)=>({t,n}));sh(o);o.forEach(z=>{let b=document.createElement('button');b.className='ans';b.textContent=z.t;b.onclick=()=>choose(b,z.n,x.c);answers.appendChild(b)})}
 function choose(btn,n,c){[...answers.children].forEach(b=>b.disabled=true);if(n===c){btn.classList.add('good');points++}else{btn.classList.add('bad');[...answers.children].forEach(b=>{if(b.textContent===pool[i].a[c])b.classList.add('good')})}score.textContent=`Richtig: ${points}`;next.hidden=false}
 function nextQ(){i++;if(i<pool.length)show();else{quiz.hidden=true;done.hidden=false;let p=Math.round(points/pool.length*100);result.textContent=`${points} von ${pool.length} richtig (${p} %)`;detail.textContent=p>=75?'75-%-Marke erreicht.':'Unter 75 % – weiter üben.'}}
-</script><footer style="max-width:850px;margin:18px auto;padding:0 16px 24px;text-align:center;color:#607080;font-size:13px;line-height:1.5">Fragen und Antworten © MSVÖ<br>Gestaltung, Programmierung und Lern-App © Yachtschule Schwaiger</footer><script id="ys-copy-protection">
-document.addEventListener('contextmenu',e=>e.preventDefault());
-document.addEventListener('copy',e=>e.preventDefault());
-document.addEventListener('cut',e=>e.preventDefault());
-document.addEventListener('dragstart',e=>e.preventDefault());
-document.addEventListener('selectstart',e=>e.preventDefault());
-document.addEventListener('keydown',e=>{
-  const k=e.key.toLowerCase();
-  if(e.key==='F12'||((e.ctrlKey||e.metaKey)&&['c','u','s'].includes(k))) e.preventDefault();
-});
-</script></body></html>
+</script><footer style="max-width:850px;margin:18px auto;padding:0 16px 24px;text-align:center;color:#607080;font-size:13px;line-height:1.5">Fragen und Antworten © MSVÖ<br>Gestaltung, Programmierung und Lern-App © Yachtschule Schwaiger</footer></body></html>
